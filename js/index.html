@@ -43,100 +43,28 @@
 
 
     <section>
-        <article><h1>Nexmo Stitch SDK for JavaScript</h1><h2>Quick Steps</h2><ul>
-<li>[x] <a href="https://dashboard.nexmo.com/sign-up">Create your Nexmo account</a></li>
-<li>[x] <a href="https://github.com/Nexmo/nexmo-cli">Install <code>nexmo-cli</code> tool</a></li>
-<li>[x] Create a new application</li>
-<li>[x] Generate a JWT token</li>
-<li>[X] Register your new user to the Conversation Service</li>
-<li>[x] Generate a JWT token (with sub=<code>[username]</code>)</li>
+        <article><h1>Nexmo Stitch SDK for JavaScript</h1><p><a href="https://twitter.com/Nexmo"><img src="https://img.shields.io/badge/twitter-@Nexmo-blue.svg?style=flat" alt="Twitter"></a></p>
+<p>The Conversation SDK is intended to provide a ready solution for developers who want to integrate chat, voice and video into their apps.</p>
+<h1>Installation</h1><h3><a href="http://npmjs.com">NPM</a></h3><p>A dependency manager for Node packages. You can install the Conversation SDK with the following command:</p>
+<pre class="prettyprint source lang-bash"><code>$ npm install nexmo-stitch</code></pre><h1>SDK Setup</h1><p>Include the <code>conversationClient.js</code> script in your web page</p>
+<pre class="prettyprint source lang-HTML"><code>&lt;script src=&quot;node_modules/nexmo-stitch/dist/conversationClient.js&quot;>&lt;/script></code></pre><h1>Testing</h1><p>We use third party tools for testing the framework:</p>
+<ul>
+<li><a href="https://karma-runner.github.io/1.0/index.html">Karma</a>: Karma is our test runner</li>
+<li><a href="https://mochajs.org/">Mocha</a>: Mocha is a feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun.</li>
+<li><a href="http://chaijs.com/">Chai</a>: Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.</li>
 </ul>
-<h2>Setup</h2><pre class="prettyprint source lang-shell"><code>$ npm install nexmo-stitch</code></pre><p>create a nexmo application using the nexmo-cli</p>
-<pre class="prettyprint source lang-shell"><code>$ nexmo app:create &quot;Application name&quot; --type rtc --keyfile private.key
->Application created: xxxxxxxx-xxxx-xxxx-xxxx-xxxxsxxxxxxx
->Private Key saved to: private.key</code></pre><p>get a token to create a user:</p>
-<pre class="prettyprint source lang-shell"><code>$ nexmo jwt:generate private.key application_id=[application_id]</code></pre><p>create a user in your app</p>
-<pre class="prettyprint source lang-shell"><code> $ curl -X POST -H 'Authorization: Bearer [JWT]' -H 'Content-Type:application/json' -d '{&quot;name&quot;:&quot;[username]&quot;}' https://api.nexmo.com/beta/users
-</code></pre><p>include the script in your web page</p>
-<pre class="prettyprint source lang-HTML"><code>&lt;script src=&quot;node_modules/nexmo-stitch/dist/conversationClient.js&quot;>&lt;/script></code></pre><p>get a user's token</p>
-<pre class="prettyprint source lang-shell"><code>$ nexmo jwt:generate private.key application_id=[application_id] sub=[username]</code></pre><h2>Usage</h2><h3>Create an instance and login</h3><pre class="prettyprint source lang-javascript"><code>var rtc = new ConversationClient({debug:false});
-// var token = request login token as above, with sub=&lt;username>
-rtc.login(token).then(
-    function(application){
-        // use the application object to manage the conversations
-        // access the available conversations
-        console.log(application.conversations);
-    });</code></pre><h3>Create a new Conversation</h3><pre class="prettyprint source lang-javascript"><code>var conversationData = {
-    display_name:'Nexmo Conversation'
-    };
-application.newConversation(conversationData).then(
-    function(conversation) {
-        // join the created conversation
-        conversation.join().then(
-            function(member) {
-                console.log(&quot;Joined as &quot; + member.user.name);
-            });
-    }).catch(function(error) {
-    console.log(error);
-});</code></pre><h3>Get a conversation you are a member of</h3><pre class="prettyprint source lang-javascript"><code>application.getConversation(conversation_id).then(
-    function(conversation) {
-         // console.log(conversation);
-        });</code></pre><h3>Set up Text listener for incoming Text Events</h3><pre class="prettyprint source lang-javascript"><code>conversation.on(&quot;text&quot;, function(sender, textEvent){
-    if (textEvent.cid === conversation.id){
-        // if (rtc.isVisible) { textEvent.seen(); }
-        console.log(&quot;message received:&quot;, textEvent, sender);
-    }
-});</code></pre><h3>Sending a Text Event</h3><pre class="prettyprint source lang-javascript"><code>conversation.sendText(&quot;Hi Nexmo&quot;).then(function(){
-        console.log('message was sent');
-    }).catch(function(error){
-        console.log('error sending the message', error);
-    });</code></pre><h2>Login Create a conversation, join it, send a message and listen for incoming messages</h2><pre class="prettyprint source lang-javascript"><code>var rtc = new ConversationClient({debug:false});
-// var token = request login token as above, with sub=&lt;username>
-rtc.login(token).then(
-    function(application){
-        // access the available conversations
-        console.log(application.conversations);
-        // you might already have conversations under `application.conversations[]` to get,
-        // or join (if application.conversations[xxx].me.state === &quot;joined&quot; || &quot;invited&quot; respectively)
-
-        application.newConversation().then( //not providing a name, the service will assign a random one for you
-            function(conversation) {
-                // join the created conversation
-                // you can also find your user_id under rtc.application.me (as application === rtc.application)
-                conversation.join().then(
-                    function(member) {
-                        console.log(&quot;Joined as &quot; + member.user.name); //member.id is your member's id
-                    });
-
-                // listen for incoming text messages
-                conversation.on(&quot;text&quot;, function(sender, textEvent){
-                        // manage seen indication
-                        // if (rtc.isVisible) { textEvent.seen(); }
-                        console.log(&quot;message received:&quot;, textEvent, sender);
-                });
-
-                // send a text event to the conversation
-                conversation.sendText(&quot;Hi Nexmo&quot;).then(
-                    function(){
-                        console.log('message was sent');
-                    }).catch(function(error){
-                        console.log('error sending the message', error);
-                });
-            }).catch(function(error) {
-            console.log(error);
-        });
-    });</code></pre><p>The main objects here are <code>application</code> and <code>conversation</code> you can use them to extend the use case.
-E.g. by inviting a second user to a conversation that you are a member (have joined).
-The second instance should see the conversation listed, and the member(or me).state as &quot;invited&quot;
-When both instances have attached listener to &quot;text&quot; events of a conversation they have both joined,
-you should be able to send/receive text events in that conversation.</p>
-<h2>Build</h2><p>If you want to contribute:</p>
-<h3>Install SDK</h3><p>clone this repo and enter in it's directory</p>
-<pre class="prettyprint source lang-shell"><code>$ npm install</code></pre><h3>build</h3><pre class="prettyprint source lang-shell"><code>$ npm start</code></pre><p>it will build interracially your code.</p>
-<p>or</p>
-<pre class="prettyprint source lang-shell"><code>$ npm run build</code></pre><h3>generate docs</h3><pre class="prettyprint source lang-shell"><code>$ npm run docs</code></pre><p>it will generate your code in <code>dist/conversationClient</code></p>
-<h3>Run the tests</h3><p>you can run the test with</p>
-<pre class="prettyprint source lang-shell"><code>$ npm run test</code></pre><p><a href="https://www.nexmo.com"><img src="https://www.nexmo.com/wp-content/themes/nexmo/resources/img/nexmo_logo_157x43_fullcolor.png" alt="NEXMO"></a></p></article>
+<h1>Code style &amp; Conventions</h1><ul>
+<li>https://github.com/airbnb/javascript</li>
+</ul>
+<h1>License</h1><p>Copyright (c) 2018 Nexmo, Inc. All rights reserved. Licensed only under the Nexmo Conversation SDK License Agreement (the &quot;License&quot;) located at</p>
+<p>By downloading or otherwise using our software or services, you acknowledge that you have read, understand and agree to be bound by the Nexmo Conversation SDK License Agreement and Privacy Policy.</p>
+<p>You may not use, exercise any rights with respect to or exploit this SDK, or any modifications or derivative works thereof, except in accordance with the License.</p>
+<h1>Authors</h1><p>Kostas Kapetanakis, <a href="mailto:kostas.kapetanakis@nexmo.com">kostas.kapetanakis@nexmo.com</a>
+Jurgo Boemo, <a href="mailto:jurgo.boemo@nexmo.com">jurgo.boemo@nexmo.com</a>
+Jacopo Maroli, <a href="mailto:jacopo.maroli@nexmo.com">jacopo.maroli@nexmo.com</a>
+Phil Leggetter, <a href="mailto:leggetter@nexmo.com">leggetter@nexmo.com</a>
+Alex Lakatos, <a href="mailto:laka@nexmo.com">laka@nexmo.com</a></p>
+<p><a href="https://www.nexmo.com"><img src="https://www.nexmo.com/wp-content/themes/nexmo/resources/img/nexmo_logo_157x43_fullcolor.png" alt="NEXMO"></a></p></article>
     </section>
 
 
