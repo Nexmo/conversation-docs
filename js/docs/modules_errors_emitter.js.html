@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: utils.js</title>
+    <title>JSDoc: Source: modules/errors_emitter.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: utils.js</h1>
+    <h1 class="page-title">Source: modules/errors_emitter.js</h1>
 
     
 
@@ -28,108 +28,78 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*
  * Nexmo Stitch SDK
- *  Utility functions
+ *  Errors Emitter
  *
- * Copyright (c) Nexmo Inc. 2015-2018
+ * Copyright (c) Nexmo Inc. 2018
  */
-var uuid = require('uuid');
 
-
+const logger = require('loglevel');
+const NexmoClientError = require('../conversationClientError').NexmoClientError;
 
 /**
- * Utilities class for the SDK.
- *  
- * @class Utils
+ * Class that can emit errors via any emitter passed to it.
+ * @class ErrorsEmitter
+ * @param {Emitter} emitter - Any event emitter that implements "emit" and "releaseGroup". Basically object that is mixed with Wildemitter.
+ * @property {string} LISTENER_GROUP='Stitch-errors' - the group this emitter will register
+ * @emits Emitter#Stitch-errors
+ * @private
  */
-class Utils {
-    /**
-     * Get the Member from the username of a conversation
-     * 
-     * @param {string} username the username of the member to get
-     * @param {Conversation} conversation the Conversation to search in
-     * @returns {Member} the requested Member
-     * @static
-     * @private
-     */
-    static getMemberFromNameOrNull(conversation, username) {
-        if (!conversation || !username) return null;
-        for (var member_id in conversation.members) {
-            if (conversation.members[member_id].user.name === username) {
-                return conversation.members[member_id];
-            }
+/**
+ * Application listening for joins.
+ *
+ * @event Application#Stitch-errors
+ *
+ * @property {ConversationClientError} error
+ *
+ * @example &lt;caption>listen for errors&lt;/caption>
+ * application.on('*', 'Stitch-errors', (error) => {
+ *    console.log('Error thrown with type ' + error.type);
+ *  });
+ * @example &lt;caption>Update the token on expired-token error&lt;/caption>
+ * application.on('system:error:expired-token', 'Stitch-errors', (error) => {
+ * 	console.log('token expired');
+ * 	application.updateToken(&lt;token>);
+ * });
+ */
+class ErrorsEmitter {
+    constructor(emitter) {
+        this.log = logger.getLogger(this.constructor.name);
+
+        if (!emitter) {
+            throw new NexmoClientError('no emitter object passed for the Error Emitter');
         }
-        return null;
+        this.emitter = emitter;
+        this.LISTENER_GROUP = 'Stitch-errors';
     }
-
     /**
-     * Perform a network GET request to the given url with the given data object
-     * 
-     * @param {string} url the url to GET
-     * @param {object} [data] the data to send
-     * @returns {Promise&lt;XMLHttpRequest.response>} the XMLHttpRequest.response
-     * @static
-     * @private
+     * Detect if the param.type includes error and emit that payload in the LISTENER_GROUP
+     * @param param - the payload to forward in the LISTENER_GROUP
+     * @param param.type - the type of the event to check if it's an error
      */
-    static networkFetch(url, data) {
-        return Utils.getToken().then((token) => {
-
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", url);
-                xhr.setRequestHeader("Authorization", "Bearer " + token);
-                xhr.responseType = 'arraybuffer';
-                xhr.onload = function() {
-                    if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) {
-                        resolve(this.response);
-                    }
-                };
-                xhr.onerror = (error) => {
-                    reject(new NexmoClientError(error));
-                }
-                xhr.send(data);
-            });
-        });
-    }
-
-    /**
-     * Perform a network POST request to the given url with the given data object
-     * 
-     * @param {string} url the url to POST
-     * @returns {Promise&lt;XMLHttpRequest>} the XMLHttpRequest
-     * @static
-     * @private
-     */
-    static networkSend(url, data) {
-        return Utils.getToken().then((token) => {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", url);
-                xhr.setRequestHeader("Authorization", "Bearer " + token);
-                xhr.onloadstart = () => {
-                    resolve(xhr);
-                };
-                xhr.onerror = (error) => {
-                    reject(new NexmoClientError(error));
-                }
-                xhr.send(data);
-            });
-        });
-    }
-
-    static getToken() {
-        if (!localStorage.getItem("NXMO_user_data")) {
-            return Promise.reject(new NexmoClientError("error:user:relogin"));
-        } else {
-            return Promise.resolve(JSON.parse(localStorage.getItem("NXMO_user_data")).token);
+    emitResponseIfError(param) {
+        if (this._isTypeError(param.type)) {
+            return this.emitter.emit(param.type, this.LISTENER_GROUP, param);
         }
+        return;
     }
 
-    static allocateUUID() {
-        return uuid.v4();
+    /**
+     * Release Group on the registered emitter (using the namespace LISTENER_GROUP that is set)
+     */
+    cleanup() {
+        return this.emitter.releaseGroup(this.LISTENER_GROUP);
+    }
+
+    /**
+     * Returns true if the param includes 'error'
+     * @param {string} type - the error type to check
+     */
+    _isTypeError(param) {
+        return param.indexOf('error') !== -1;
     }
 }
 
-module.exports = Utils;
+module.exports = ErrorsEmitter;
 </code></pre>
         </article>
     </section>
@@ -146,7 +116,7 @@ module.exports = Utils;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Sep 19 2018 16:25:56 GMT+0100 (BST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Sep 25 2018 12:18:38 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

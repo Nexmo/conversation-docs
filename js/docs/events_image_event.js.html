@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: modules/errors_emitter.js</title>
+    <title>JSDoc: Source: events/image_event.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: modules/errors_emitter.js</h1>
+    <h1 class="page-title">Source: events/image_event.js</h1>
 
     
 
@@ -28,78 +28,108 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*
  * Nexmo Stitch SDK
- *  Errors Emitter
+ *  ImageEvent Object Model
  *
- * Copyright (c) Nexmo Inc. 2018
+ * Copyright (c) Nexmo Inc. 2017-2018
  */
-
 const logger = require('loglevel');
-const NexmoClientError = require('../conversationClientError').NexmoClientError;
+
+const Event = require('./event');
+const Utils = require('./../utils');
+
+const ConversationClientError = require('../conversationClientError');
+
+const NexmoClientError = ConversationClientError.NexmoClientError;
 
 /**
- * Class that can emit errors via any emitter passed to it.
- * @class ErrorsEmitter
- * @param {Emitter} emitter - Any event emitter that implements "emit" and "releaseGroup". Basically object that is mixed with Wildemitter.
- * @property {string} LISTENER_GROUP='Stitch-errors' - the group this emitter will register
- * @emits Emitter#Stitch-errors
- * @private
+ * An image event
+ *
+ * @class ImageEvent
+ * @extends Event
  */
-/**
- * Application listening for joins.
- *
- * @event Application#Stitch-errors
- *
- * @property {ConversationClientError} error
- *
- * @example &lt;caption>listen for errors&lt;/caption>
- * application.on('*', 'Stitch-errors', (error) => {
- *    console.log('Error thrown with type ' + error.type);
- *  });
- * @example &lt;caption>Update the token on expired-token error&lt;/caption>
- * application.on('system:error:expired-token', 'Stitch-errors', (error) => {
- * 	console.log('token expired');
- * 	application.updateToken(&lt;token>);
- * });
- */
-class ErrorsEmitter {
-    constructor(emitter) {
+
+class ImageEvent extends Event {
+    constructor(conversation, params) {
+        super(conversation, params);
         this.log = logger.getLogger(this.constructor.name);
-
-        if (!emitter) {
-            throw new NexmoClientError('no emitter object passed for the Error Emitter');
+        this.type = "image";
+        this.conversation = conversation;
+        this.state = {
+            seen_by: {},
+            delivered_to: {}
+        };
+        if (params &amp;&amp; params.body) {
+            if (params.body.timestamp)
+                this.timestamp = params.body.timestamp;
         }
-        this.emitter = emitter;
-        this.LISTENER_GROUP = 'Stitch-errors';
-    }
-    /**
-     * Detect if the param.type includes error and emit that payload in the LISTENER_GROUP
-     * @param param - the payload to forward in the LISTENER_GROUP
-     * @param param.type - the type of the event to check if it's an error
-     */
-    emitResponseIfError(param) {
-        if (this._isTypeError(param.type)) {
-            return this.emitter.emit(param.type, this.LISTENER_GROUP, param);
-        }
-        return;
+        Object.assign(this, params);
     }
 
     /**
-     * Release Group on the registered emitter (using the namespace LISTENER_GROUP that is set)
+     * Set the message status to 'seen'
      */
-    cleanup() {
-        return this.emitter.releaseGroup(this.LISTENER_GROUP);
+    seen() {
+        return super.seen();
     }
 
     /**
-     * Returns true if the param includes 'error'
-     * @param {string} type - the error type to check
+     * Set the message status to 'delivered'
      */
-    _isTypeError(param) {
-        return param.indexOf('error') !== -1;
+    delivered() {
+        return super.delivered();
+    }
+
+    /**
+     * Delete the image event
+     * @returns {Promise}
+     */
+    del() {
+        return super.del();
+    }
+    /**
+     * Download an Image from Media service //3 representations
+     * @param {string} [type="thumbnail"] original, medium, thumbnail,
+     * @param {string} [representations=this.body.representations]  the ImageEvent.body for the image to download
+     * @returns {string} the dataUrl "data:image/jpeg;base64..."
+     * @example &lt;caption>Downloading an image from the imageEvent&lt;/caption>
+     *                 imageEvent.fetchImage().then((imagedata) => {
+     *                      var img = new Image();
+     *                      img.onload = function () {
+     *                          copyCanvas(img);
+     *                          };
+     *                      img.src = imagedata;
+     *
+     *                      // to cancel the request:
+     *                      // conversation.abortSendImage(imageRequest);
+     *                  });
+     */
+    fetchImage(type = "thumbnail", imageDataObject = this.body.representations) {
+        const url = imageDataObject[type].url;
+        return Utils.networkFetch(url)
+            .then((response) => {
+                const responseArray = new Uint8Array(response);
+                // Convert the int array to a binary String
+                // We have to use apply() as we are converting an *array*
+                // and String.fromCharCode() takes one or more single values, not
+                // an array.
+                //support large image files (Chunking)
+                let res = "";
+                const chunk = 8 * 1024;
+                let i;
+                for (i = 0; i &lt; responseArray.length / chunk; i++) {
+                    res += String.fromCharCode.apply(null, responseArray.subarray(i * chunk, (i + 1) * chunk));
+                }
+                res += String.fromCharCode.apply(null, responseArray.subarray(i * chunk));
+                const b64 = btoa(res);
+                const dataUrl = "data:image/jpeg;base64," + b64;
+                return Promise.resolve(dataUrl);
+            }).catch((error) => {
+                this.log.warn(error);
+                return Promise.reject(new NexmoClientError("error:fetch-image"));
+            });
     }
 }
-
-module.exports = ErrorsEmitter;
+module.exports = ImageEvent;
 </code></pre>
         </article>
     </section>
@@ -116,7 +146,7 @@ module.exports = ErrorsEmitter;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Sep 19 2018 16:25:56 GMT+0100 (BST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Sep 25 2018 12:18:38 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
