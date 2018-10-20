@@ -4,7 +4,7 @@ The docs are hosted on https://developer.nexmo.com/stitch/overview
 
 # Making changes
 
-- After updating the docs in this repo, navigate to your local copy of `nexmo-developer`
-- Run the rake task `$ rake repos:pull nexmo/conversation-docs`
+- Make relevant changes to this repo by forking this repo [nexmo-developer](https://github.com/Nexmo/conversation-docs)
 - Make a PR with your changes to the `nexmo-developer` repo
 - Merge the PR and deploy a new version of the `nexmo-developer` site
+-Thanks for your contribution !!!
