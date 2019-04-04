@@ -89,10 +89,10 @@ class Media {
             this.rtcObjects = {};
             this.rtcNewPromises = [];
             this.streamIndex = 0;
-            this.rtcstats = {};
-            this.rtcStats_module = null;
+            this.rtcstats_conf = {};
+            this.rtcStats = null;
             if (this.application.session.config &amp;&amp; this.application.session.config.rtcstats) {
-                this.rtcstats = {
+                this.rtcstats_conf = {
                     emit_events: this.application.session.config.rtcstats.emit_events,
                     ws_url: this.application.session.config.rtcstats.ws_url
                 }
@@ -100,7 +100,7 @@ class Media {
             if (this.application.session.config &amp;&amp; this.application.session.config.screenShareExtensionId &amp;&amp; this.application.session.config.screenShareExtensionId !== '') {
                 this.rtcHelper._setScreenShareExtensionId(this.application.session.config.screenShareExtensionId);
             }
-            if (this.rtcstats.emit_events) {
+            if (this.rtcstats_conf.emit_events) {
                 this._initStatsReporting();
             }
         } else {
@@ -112,13 +112,13 @@ class Media {
         this.log.debug('attaching leave listeners in media for ' + this.parentConversation.id)
         this.parentConversation.on('rtc:terminate', 'media_module', (event) => {
             this._handleParticipantRtcTerminate(event);
-        })
+        });
         this.parentConversation.on('member:left', 'media_module', (member) => {
             this._handleMemberLeft(member);
-            if ((!member.transferred_to || member.transferred_from) &amp;&amp; member.user.id === this.application.me.id &amp;&amp; this.application.activeStream) {
+            if ((!member.transferred_to || member.transferred_from) &amp;&amp; member.user.id === this.application.me.id &amp;&amp; (this.application.activeStream || this.application.activeStreams.length)) {
                 this.disable();
             }
-        })
+        });
     }
 
 	/**
@@ -154,7 +154,7 @@ class Media {
      */
     _enableStatsReporting(ws_url) {
         this.application.session.config.rtcstats.ws_url = ws_url;
-        this.rtcstats.ws_url = ws_url;
+        this.rtcstats_conf.ws_url = ws_url;
         this._initStatsReporting();
     }
 
@@ -164,14 +164,14 @@ class Media {
      */
     _enableStatsEvents() {
         this.application.session.config.rtcstats.emit_events = true;
-        this.rtcstats.emit_events = true;
+        this.rtcstats_conf.emit_events = true;
         this._initStatsEvents();
     }
 
     _initStatsReporting() {
-        if (!this.rtcHelper.isNode() &amp;&amp; !this.rtcStats_module &amp;&amp; this.application.session.config.rtcstats.ws_url) {
+        if (!this.rtcHelper.isNode() &amp;&amp; !this.rtcStats &amp;&amp; this.application.session.config.rtcstats.ws_url) {
             this.rtcStats_wsConnection = new TraceWS();
-            this.rtcStats_module = new RTCStats(
+            this.rtcStats = new RTCStats(
                 this.rtcStats_wsConnection.trace,
                 false,// isCallback
                 1000, // interval at which getStats will be polled,
@@ -184,7 +184,7 @@ class Media {
     }
 
     _initStatsEvents() {
-        if (!this.rtcHelper.isNode() &amp;&amp; !this.rtcStats_module) {
+        if (!this.rtcHelper.isNode() &amp;&amp; !this.rtcStats) {
             const emit_event = (type, mos, report, mos_report) => {
                 if (type === 'mos') {
                     if (mos) {
@@ -194,7 +194,7 @@ class Media {
                     this.application.emit('rtcstats:report', mos, null, this.parentConversation, mos_report);
                 }
             }
-            this.rtcStats_module = new RTCStats(
+            this.rtcStats = new RTCStats(
                 emit_event,
                 true, // isCallback
                 1000, // interval at which getStats will be polled,
@@ -209,9 +209,9 @@ class Media {
      */
     _disableStatsReporting() {
         this.application.session.config.rtcstats.ws_url = '';
-        this.rtcstats.ws_url = '';
-        this.this.rtcStats_wsConnection.disable();
-        delete this.rtcStats_module;
+        this.rtcstats_conf.ws_url = '';
+        this.rtcStats_wsConnection.disable();
+        delete this.rtcStats;
     }
 
     /**
@@ -220,9 +220,9 @@ class Media {
      */
     _disableStatsEvents() {
         this.application.session.config.rtcstats.emit_events = false;
-        this.rtcstats.emit_events = false;
+        this.rtcstats_conf.emit_events = false;
         this.rtcStats.disable();
-        delete this.rtcStats_module;
+        delete this.rtcStats;
     }
 
 	/**
@@ -941,7 +941,9 @@ class Media {
                 this._closeStream(this.application.activeStream.localStream);
             }
             delete this.pc;
+            this.rtcStats = null;
             this.application.activeStream = {};
+            this.application.activeStreams = [];
             this.parentConversation.remoteMembers = [];
             this.parentConversation.releaseGroup('media_module');
             this.listeningToRtcEvent = false;
@@ -965,7 +967,9 @@ class Media {
             });
         });
         const closeResourcesPromise = Promise.resolve().then(() => {
-            if (this.rtcObjects[leg_id].pc) this.rtcObjects[leg_id].pc.close();
+            if (this.rtcObjects[leg_id].pc) {
+                this.rtcObjects[leg_id].pc.close();
+            }
             if (this.rtcObjects[leg_id].localStream) {
                 this._closeStream(this.rtcObjects[leg_id].localStream);
             }
@@ -1028,6 +1032,38 @@ class Media {
             .catch(() => {
                 this.log.warn('Some of the enable requests failed.');
             });
+    }
+
+    /**
+     * Replaces the stream's tracks currently being used as the sender's sources with a new one
+     * @param {object} constraints - video and audio constraints
+     * @param {string} type - rtc object type
+     * @param {object} [constraints.audio] - set audio constraints - { deviceId: { exact: microphoneId } }
+     * @param {object} [constraints.video] - set video constraints - { deviceId: { exact: cameraId } }
+     * @returns {Promise&lt;MediaStream>} - Returns the new stream.
+     * @example &lt;caption>Update the stream currently being used with a new one&lt;/caption>
+     */
+    updateSource(constraints, type = 'video') {
+        if (!RTCRtpSender.prototype.replaceTrack) {
+            return Promise.reject(new NexmoApiError('Not implemented yet'));
+        }
+        let rtcObjectByType = this._findRtcObjectByType(type);
+        if (rtcObjectByType &amp;&amp; rtcObjectByType.pc) {
+            return this.rtcHelper.getUserVideo(constraints.video, constraints.audio).then(localStream => {
+                localStream.getTracks().forEach(track => {
+                    const sender = rtcObjectByType.pc.getSenders().find(s => s.track.kind === track.kind);
+                    if (sender) {
+                        track.enabled = sender.track.enabled;
+                        sender.replaceTrack(track);
+                    }
+                });
+                this._closeStream(rtcObjectByType.localStream);
+                rtcObjectByType.localStream = localStream;
+                return localStream;
+            });
+        } else {
+            return Promise.reject(new NexmoApiError('error:media:stream:not-found'));	
+        }
     }
 
 	/**
@@ -1159,10 +1195,6 @@ class Media {
        **/
     enable(params) {
         return new Promise((resolve, reject) => {
-            const onClientError = (error) => {
-                this.log.error(error);
-                reject(new NexmoClientError(error));
-            }
             if (this.parentConversation.me === null) {
                 reject(new NexmoClientError('error:self'));
             } else {
@@ -1185,11 +1217,11 @@ class Media {
                         })
                 }
                 if (this.application.activeStream.rtc_id) {
-                    return onClientError(new NexmoClientError('error:media:already-connecting'));
+                    return reject(new NexmoClientError('error:media:already-connecting'));
                 }
                 // this needs to happen soon before we use pc.trace
                 // ps.trace is injected in rtcstats module
-                if (this.rtcstats.emit_events) {
+                if (this.rtcstats_conf.emit_events) {
                     this._initStatsEvents();
                 }
                 return this._handleAudio(params)
@@ -1441,7 +1473,7 @@ module.exports = Media;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Feb 01 2019 11:02:45 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 04 2019 08:32:36 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
