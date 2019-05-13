@@ -53,8 +53,8 @@ const NexmoClientError = ConversationClientError.NexmoClientError;
  * @property {object[]} rtcObjects data related to the rtc connection
  * @property {string} rtcObjects.rtc_id the rtc_id
  * @property {PeerConnection} rtcObjects.pc the current PeerConnection object
- * @property {Stream} rtcObjects.localStream the stream of the specific rtc_id
- * @property {string} rtcObjects.type=video|screenshare the type of the stream
+ * @property {Stream} rtcObjects.stream the stream of the specific rtc_id
+ * @property {string} [rtcObjects.type] audio|video|screenshare the type of the stream
  * @property {number} rtcObjects.streamIndex the index number of the stream (e.g. use to mute)
  * @emits Application#rtcstats:report
  * @emits Member#media:stream:on
@@ -105,7 +105,7 @@ class Media {
                 this.rtcstats_conf = {
                     emit_events: this.application.session.config.rtcstats.emit_events,
                     ws_url: this.application.session.config.rtcstats.ws_url
-                }
+                };
             }
             if (this.application.session.config &amp;&amp; this.application.session.config.screenShareExtensionId &amp;&amp; this.application.session.config.screenShareExtensionId !== '') {
                 this.rtcHelper._setScreenShareExtensionId(this.application.session.config.screenShareExtensionId);
@@ -119,7 +119,7 @@ class Media {
     }
 
     _attachEndingEventHandlers() {
-        this.log.debug('attaching leave listeners in media for ' + this.parentConversation.id)
+        this.log.debug('attaching leave listeners in media for ' + this.parentConversation.id);
         this.parentConversation.on('rtc:terminate', 'media_module', (event) => {
             this._handleParticipantRtcTerminate(event);
         });
@@ -127,7 +127,7 @@ class Media {
             this._handleMemberLeft(member);
 
             if ((!member.transferred_to || member.transferred_from) &amp;&amp; member.user.id === this.application.me.id &amp;&amp; (this.application.activeStreams)) {
-                this.disable();
+                this._cleanMediaProperties();
             }
         });
     }
@@ -155,7 +155,7 @@ class Media {
      *           });
      */
     _enableCallStats(pc) {
-        this.application.session.callstats.addNewFabric(pc, this.parentConversation.me.id, "audio", this.parentConversation.id);
+        this.application.session.callstats.addNewFabric(pc, this.parentConversation.me.id, 'audio', this.parentConversation.id);
     }
 
     /**
@@ -204,7 +204,7 @@ class Media {
                 } else if (type === 'mos_report') {
                     this.application.emit('rtcstats:report', mos, null, this.parentConversation, mos_report);
                 }
-            }
+            };
             this.rtcStats = new RTCStats(
                 emit_event,
                 true, // isCallback
@@ -246,6 +246,7 @@ class Media {
                 this.log.error(error);
                 reject(new NexmoClientError(error));
             }
+
             const streamIndex = this.streamIndex;
             this.streamIndex++;
             this.rtcHelper.getUserAudio()
@@ -272,19 +273,27 @@ class Media {
                     if (this.application.session.config.callstats &amp;&amp; this.application.session.config.callstats.enabled) {
                         this._enableCallStats(pc);
                     }
+
                     this.pc = pc;
                     pc.ontrack = (evt) => {
                         this.application.activeStreams.push(evt.streams[0]);
+                        this.parentConversation.me.emit("media:stream:on", {
+                            pc: this.pc,
+                            stream: evt.streams[0],
+                            type: 'audio',
+                            streamIndex
+                        });
+                        resolve(evt.streams[0]);
                     };
+
                     pc.addStream(localStream);
 
                     pc.onnegotiationneeded = () => {
-                        pc.createOffer().then((offer) => {
-                            return pc.setLocalDescription(offer);
-                        }).then(() => {
-
-                            // Send the offer to the remote peer through the signaling server
-                        }).catch(onClientError);
+                        pc.createOffer()
+                            .then((offer) => {
+                                return pc.setLocalDescription(offer);
+                            })
+                            .catch(onClientError);
                     }
 
                     pc.oniceconnectionstatechange = (connection_event) => {
@@ -327,11 +336,10 @@ class Media {
                                     this.rtcObjects[rtc_id] = {
                                         rtc_id: rtc_id,
                                         pc: pc,
-                                        localStream: localStream,
+                                        stream: localStream,
                                         type: 'audio',
-                                        streamIndex: streamIndex
+                                        streamIndex
                                     };
-                                    this.parentConversation.me.emit("media:stream:on", this.rtcObjects[rtc_id]);
                                 } else {
                                     reject(new NexmoApiError(response));
                                 }
@@ -340,7 +348,6 @@ class Media {
 
                         switch (pc.iceGatheringState) {
                             case 'new':
-
                                 this.log.debug('ice gathering new');
                                 break;
                             case 'complete':
@@ -361,8 +368,6 @@ class Media {
                                 break;
                         }
                     }
-
-                    resolve(localStream);
                 })
                 .then(() => {
                     // We want to be able to handle these events, for this  member, before they get propagated out
@@ -372,9 +377,9 @@ class Media {
                             return;
                         }
                         this.pc.setRemoteDescription(new RTCSessionDescription({
-                                type: 'answer',
-                                sdp: event.body.answer
-                            }),
+                            type: 'answer',
+                            sdp: event.body.answer
+                        }),
                             () => {
                                 this.log.debug('remote description is set');
                             },
@@ -399,7 +404,6 @@ class Media {
                     direction = params.video.direction;
                     name = params.video.name || 'video';
                     videoConstraints = params.video.constraints;
-
                 } else {
                     direction = params.video;
                 }
@@ -499,12 +503,12 @@ class Media {
                 rtc_id: rtc_id,
                 func: func,
                 ran: false
-            })
+            });
         }
     }
 
     _handleVideoSend(localStream, isSendOnly, type, name, params) {
-        var video_rtc_id = null;
+        let video_rtc_id = null;
         const clientId = Utils.allocateUUID();
         const pc = this.rtcHelper.createRTCPeerConnection({
             'iceServers': this.application.session.config.iceServers,
@@ -513,10 +517,10 @@ class Media {
             'rtcpMuxPolicy': 'require',
             'iceCandidatePoolSize': '0'
         }, {
-            optional: [{
-                'DtlsSrtpKeyAgreement': 'true'
-            }]
-        }, clientId);
+                optional: [{
+                    'DtlsSrtpKeyAgreement': 'true'
+                }]
+            }, clientId);
 
         pc.trace('conversation_id', this.parentConversation.id);
         pc.trace('member_id', this.parentConversation.me.id);
@@ -528,19 +532,17 @@ class Media {
         // We want to be able to handle these events, for this  member, before they get propagated out
         if (!this.listeningToRtcEvent) {
             this.parentConversation.on('rtc:answer', 'media_module', (event) => {
-
-                let setRemoveDescriptionFunc =
-                    () => {
-                        this.rtcObjects[event.body.rtc_id].pc.setRemoteDescription(new RTCSessionDescription({
-                            type: 'answer',
-                            sdp: this.rtcHelper.editSDPOrder(pc.localDescription.sdp, event.body.answer)
-                        })).then(() => {
-                            this.log.debug('remote description is set');
-                        }).catch((e) => {
-                            this.log.warn('set remote description failed with error', e);
-                        });
-                    };
-                this._runWhenLegInitialized(event.body.rtc_id, setRemoveDescriptionFunc)
+                let setRemoveDescriptionFunc = () => {
+                    this.rtcObjects[event.body.rtc_id].pc.setRemoteDescription(new RTCSessionDescription({
+                        type: 'answer',
+                        sdp: this.rtcHelper.editSDPOrder(pc.localDescription.sdp, event.body.answer)
+                    })).then(() => {
+                        this.log.debug('remote description is set');
+                    }).catch((e) => {
+                        this.log.warn('set remote description failed with error', e);
+                    });
+                };
+                this._runWhenLegInitialized(event.body.rtc_id, setRemoveDescriptionFunc);
             });
         }
 
@@ -560,7 +562,7 @@ class Media {
         };
 
         pc.addStream(localStream);
-        let streamIndex = this.streamIndex;
+        const streamIndex = this.streamIndex;
         this.streamIndex++;
 
         const p = new Promise((resolve, reject) => {
@@ -569,13 +571,12 @@ class Media {
                     return pc.setLocalDescription(desc);
                 }).catch((e) => {
                     return new NexmoApiError(e);
-                })
+                });
         });
 
         pc.oniceconnectionstatechange = (connection_event) => {
-
             switch (pc.iceConnectionState) {
-                //https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceConnectionState
+                // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceConnectionState
                 case 'disconnected':
                     this.log.warn('One or more transports is disconnected', pc.iceConnectionState);
                     break;
@@ -594,7 +595,7 @@ class Media {
                     this.log.debug('The ice connection status changed', pc.iceConnectionState);
                     break;
             }
-        }
+        };
 
         const do_gatherDone = () => {
             if (!pc) return;
@@ -623,7 +624,7 @@ class Media {
                     this.rtcObjects[rtc_id] = {
                         rtc_id: rtc_id,
                         pc: pc,
-                        localStream: localStream,
+                        stream: localStream,
                         type: type,
                         streamIndex: streamIndex
                     };
@@ -633,14 +634,14 @@ class Media {
                         localStream.getVideoTracks()[0].onended = () => {
                             this._disableLeg(rtc_id)
                                 .then(() => {
-                                    this.parentConversation.me.emit("media:stream:off", streamIndex);
+                                    this.parentConversation.me.emit('media:stream:off', streamIndex);
                                 })
                                 .catch(() => {
-                                    this.parentConversation.me.emit("media:stream:off", streamIndex);
-                                })
+                                    this.parentConversation.me.emit('media:stream:off', streamIndex);
+                                });
                         };
                     }
-                    this.parentConversation.me.emit("media:stream:on", {
+                    this.parentConversation.me.emit('media:stream:on', {
                         type: type,
                         name: name,
                         streamIndex: streamIndex,
@@ -654,13 +655,11 @@ class Media {
             if (params &amp;&amp; params.label) {
                 event_to_emit.label = params.label;
             }
-
-        }
+        };
 
         let gatheringTimer = null;
         let rtc_sent = false;
         pc.onicegatheringstatechange = () => {
-
             switch (pc.iceGatheringState) {
                 case 'new':
                     this.log.debug('ice gathering new');
@@ -681,7 +680,7 @@ class Media {
                     this.log.debug('ice gathering gathering');
                     break;
             }
-        }
+        };
         this._attachEndingEventHandlers();
         this.log.debug('sending local stream');
 
@@ -689,7 +688,6 @@ class Media {
     }
 
     _sendIceRequest(body, rtc_id) {
-
         return new Promise((resolve, reject) => {
             const event_to_emit = {
                 type: 'rtc:ice',
@@ -697,7 +695,7 @@ class Media {
                 from: this.parentConversation.me.id,
                 rtc_id: rtc_id,
                 body: body
-            }
+            };
 
             this.application.session.sendRequest(event_to_emit, (response) => {
                 if (response.type === 'rtc:ice:success') {
@@ -706,17 +704,16 @@ class Media {
                     reject(new NexmoApiError(response));
                 }
             });
-        })
+        });
     }
 
     _onIceCandidate(promiseArray, event, body, rtc_id) {
-
         const bodyToSend = body;
 
         if (event.candidate) {
             bodyToSend.candidates = event.candidate;
             this.log.debug('sending trickle candidates: ', bodyToSend);
-            promiseArray.push(this._sendIceRequest(bodyToSend, rtc_id))
+            promiseArray.push(this._sendIceRequest(bodyToSend, rtc_id));
         } else {
             bodyToSend.candidates = {
                 completed: true
@@ -766,10 +763,10 @@ class Media {
             'rtcpMuxPolicy': 'require',
             'iceCandidatePoolSize': '0'
         }, {
-            optional: [{
-                'DtlsSrtpKeyAgreement': 'true'
-            }]
-        }, clientId);
+                optional: [{
+                    'DtlsSrtpKeyAgreement': 'true'
+                }]
+            }, clientId);
 
         if (this.application.session.config.callstats &amp;&amp; this.application.session.config.callstats.enabled) {
             this._enableCallStats(pc);
@@ -783,7 +780,7 @@ class Media {
         remoteMemberObject.pc.ontrack = (evt) => {
             if (remoteMemberObject.stream !== evt.streams[0]) {
                 remoteMemberObject.stream = evt.streams[0];
-                remoteMemberObject.remote_member.emit("media:stream:on", {
+                remoteMemberObject.remote_member.emit('media:stream:on', {
                     streamIndex: remoteMemberObject.streamIndex,
                     rtc_id: remoteMemberObject.local_leg_id,
                     remote_member_id: remoteMemberObject.remote_member_id,
@@ -796,9 +793,8 @@ class Media {
         };
 
         remoteMemberObject.pc.oniceconnectionstatechange = (connection_event) => {
-
             switch (remoteMemberObject.pc.iceConnectionState) {
-                //https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceConnectionState
+                // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceConnectionState
                 case 'disconnected':
                     this.log.warn('One or more transports is disconnected', remoteMemberObject.pc.iceConnectionState);
                     break;
@@ -846,12 +842,11 @@ class Media {
                         this.log.error(response.type + ': failed to set answer for member ' + remoteMemberObject.remote_member_id);
                     }
                 });
-        }
+        };
 
         let gatheringTimer = null;
         let rtc_sent = false;
         remoteMemberObject.pc.onicegatheringstatechange = () => {
-
             switch (remoteMemberObject.pc.iceGatheringState) {
                 case 'new':
                     this.log.debug('ice gathering new for member ' + event.body.member_id);
@@ -877,16 +872,16 @@ class Media {
         };
         const rtcAnswerFunc = () => {
             remoteMemberObject.pc.setRemoteDescription(new RTCSessionDescription({
-                    type: 'offer',
-                    sdp: event.body.sdp
-                }))
+                type: 'offer',
+                sdp: event.body.sdp
+            }))
                 .then(() => {
-                    return remoteMemberObject.pc.createAnswer()
+                    return remoteMemberObject.pc.createAnswer();
                 })
                 .then((answer) => {
                     return remoteMemberObject.pc.setLocalDescription(answer);
                 });
-        }
+        };
         this._runWhenLegInitialized(remoteMemberObject.local_leg_id, rtcAnswerFunc);
     }
 
@@ -896,14 +891,14 @@ class Media {
                 return new NexmoApiError(e);
             })
             .finally(() => {
-                return member.emit("media:connection:fail", connection_details);
-            })
+                return member.emit('media:connection:fail', connection_details);
+            });
     }
 
     _handleMemberLeft(member_left) {
         const member_id = member_left.id;
         const member_legs = this.parentConversation.remoteMembers.filter((member) => {
-            return member.remote_member_id === member_id
+            return member.remote_member_id === member_id;
         });
         member_legs.forEach((member_leg) => {
             this._handleParticipantRtcTerminate({
@@ -911,12 +906,12 @@ class Media {
                     rtc_id: member_leg.remote_leg_id
                 }
             });
-        })
+        });
     }
 
     _handleParticipantRtcTerminate(event) {
         const member = this.parentConversation.remoteMembers.find((member) => {
-            return member.remote_leg_id === event.body.rtc_id
+            return member.remote_leg_id === event.body.rtc_id;
         });
 
         if (!member) {
@@ -925,10 +920,10 @@ class Media {
         }
 
         this.parentConversation.remoteMembers = this.parentConversation.remoteMembers.filter((remoteMember) => {
-            return remoteMember.remote_leg_id !== event.body.rtc_id
+            return remoteMember.remote_leg_id !== event.body.rtc_id;
         });
         this._deleteMemberMedia(member);
-        member.remote_member.emit("media:stream:off", {
+        member.remote_member.emit('media:stream:off', {
             remote_member_id: member.remote_member_id,
             streamIndex: member.streamIndex
         });
@@ -960,8 +955,8 @@ class Media {
                         }
                     }
                     return this._handleVideo(params).then(resolve).catch(reject);
-                }).catch(err => reject(err));
-        })
+                }).catch((err) => reject(err));
+        });
     }
 
     _validateUpdateParams(params) {
@@ -1008,6 +1003,29 @@ class Media {
         });
     }
 
+    /**
+     * Cleans up the user's media before leaving the conversation
+     */
+    _cleanMediaProperties() {
+        if (this.pc) {
+            this.pc.close();
+        }
+
+        if (this.rtcObjects) {
+            for (const leg_id in this.rtcObjects) {
+                this._closeStream(this.rtcObjects[leg_id].stream);
+            }
+        }
+
+        delete this.pc;
+        this.rtcStats = null;
+        this.application.activeStreams = [];
+        this.rtcObjects = {};
+        this.parentConversation.remoteMembers = [];
+        this.parentConversation.releaseGroup('media_module');
+        this.listeningToRtcEvent = false;
+    }
+
     _disableLeg(leg_id) {
         const csRequestPromise = new Promise((resolve, reject) => {
             this.application.session.sendRequest({
@@ -1028,8 +1046,8 @@ class Media {
             if (this.rtcObjects[leg_id].pc) {
                 this.rtcObjects[leg_id].pc.close();
             }
-            if (this.rtcObjects[leg_id].localStream) {
-                this._closeStream(this.rtcObjects[leg_id].localStream);
+            if (this.rtcObjects[leg_id].stream) {
+                this._closeStream(this.rtcObjects[leg_id].stream);
             }
         });
         return Promise.all([csRequestPromise, closeResourcesPromise]).then(() => {
@@ -1076,8 +1094,8 @@ class Media {
                     this._enableMediaTracks(tracks, mute);
                     reject(new NexmoApiError(response));
                 }
-            })
-        })
+            });
+        });
     }
 
     /**
@@ -1103,8 +1121,8 @@ class Media {
                         sender.replaceTrack(track);
                     }
                 });
-                this._closeStream(rtcObjectByType.localStream);
-                rtcObjectByType.localStream = localStream;
+                this._closeStream(rtcObjectByType.stream);
+                rtcObjectByType.stream = localStream;
                 return localStream;
             });
         } else {
@@ -1145,13 +1163,13 @@ class Media {
         }
         Object.values(muteObjects).forEach(rtcObject => {
             if (audio) {
-                const audioTracks = rtcObject.localStream.getAudioTracks();
+                const audioTracks = rtcObject.stream.getAudioTracks();
                 const audioPromise = this._setMediaTracksAndMute(rtcObject.rtc_id, audioTracks, mute, audioType, audioSuccess);
                 promises.push(audioPromise);
             }
 
             if (video) {
-                const videoTracks = rtcObject.localStream.getVideoTracks();
+                const videoTracks = rtcObject.stream.getVideoTracks();
                 const videoPromise = this._setMediaTracksAndMute(rtcObject.rtc_id, videoTracks, mute, videoType, videoSuccess);
                 promises.push(videoPromise);
             }
@@ -1170,7 +1188,7 @@ class Media {
     earmuff(earmuff) {
         return new Promise((resolve, reject) => {
             if (this.me === null) {
-                reject(new NexmoClientError("error:self"));
+                reject(new NexmoClientError('error:self'));
             } else {
                 let type = 'audio:earmuff:off';
                 if (earmuff) {
@@ -1197,6 +1215,7 @@ class Media {
        * @param {object} params - rtc params
        * @param {string} params.label - Label is an application defined tag, eg. ‘fullscreen’
        * @param {object} [params.audio=true] - audio enablement mode. possible values "both", "send_only", "receive_only", "none", true or false
+       * @param {object} [params.autoPlayAudio=false] - attach the audio stream automatically to start playing after enable media (default false)
        * * &lt;!-- the following line should be added when deploying video to prod.
        * @param {object} [params.video=false] - video enablement mode. possible values "both", "send_only", "receive_only", "none", true or false
        * @param {object} [params.video={direction: 'some_direction', constraints: constraints_object}] - video enablement mode.
@@ -1257,19 +1276,29 @@ class Media {
                             Promise.all(disablePromises)
                                 .then(() => {
                                     resolve(localStream);
-                                })
+                                });
                         })
                         .catch((e) => {
                             reject(e);
-                        })
+                        });
                 }
                 // this needs to happen soon before we use pc.trace
                 // ps.trace is injected in rtcstats module
                 if (this.rtcstats_conf.emit_events) {
                     this._initStatsEvents();
                 }
-                return this._handleAudio(params)
-                    .then((localStream) => resolve(localStream))
+
+                this._handleAudio(params)
+                    .then((stream) => {
+                        // attach the audio stream automatically to start playing
+                        if (params &amp;&amp; params.autoPlayAudio) {
+                            this.rtcHelper._playAudioStream(stream);
+                        }
+                        resolve(stream);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
             }
         });
     }
@@ -1386,9 +1415,9 @@ class Media {
     fetchRecording(url) {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            Utils.getToken().then(token => {
-                xhr.open("GET", url);
-                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            Utils.getToken().then((token) => {
+                xhr.open('GET', url);
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.responseType = 'blob';
                 xhr.onload = () => {
@@ -1398,7 +1427,7 @@ class Media {
                         });
                         resolve(URL.createObjectUrl(blob));
                     } else {
-                        reject(new NexmoClientError("error:fetch-recording"));
+                        reject(new NexmoClientError('error:fetch-recording'));
                     }
                 };
                 xhr.send();
@@ -1516,7 +1545,7 @@ module.exports = Media;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Apr 17 2019 16:32:41 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 13 2019 14:32:41 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
