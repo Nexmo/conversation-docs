@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: events/recording.js</title>
+    <title>JSDoc: Source: pages/events_page.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: events/recording.js</h1>
+    <h1 class="page-title">Source: pages/events_page.js</h1>
 
     
 
@@ -28,34 +28,67 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*
  * Nexmo Client SDK
- *  Message Object Model
  *
  * Copyright (c) Nexmo Inc.
  */
 
-const NXMEvent = require('./nxmEvent');
+const Page = require('./page')
+const NXMEvent = require('../events/nxmEvent');
+const TextEvent = require('../events/text_event');
+const ImageEvent = require('../events/image_event');
 
 /**
- * Start a recording of the audio stream
+ * A Events Page
  *
- * @class Recording
+ * @class EventsPage
+ * @param {Map} items map of events fetched in the paginated query
+ * @extends Page
  */
-class Recording extends NXMEvent {
-  constructor(conversation, params) {
-    super(conversation, params);
-    this.conversation = conversation;
-    Object.assign(this, params);
-  }
 
-  /**
-   * Stop the recording
-   * @returns {Promise}
-   */
-  stop() {
-    return super.del();
-  }
+class EventsPage extends Page {
+    constructor(params) {
+        super(params);
+        this.items = new Map()
+        this.conversation = params.conversation
+        // Iterate and create the event objects
+        params.items.forEach((event) => {
+            switch (event.type) {
+                // NXMEvent types with corresponding classes
+                case 'text':
+                this.items.set(event.id, new TextEvent(this.conversation, event));
+                break;
+                case 'image':
+                this.items.set(event.id, new ImageEvent(this.conversation, event));
+                break;
+                default:
+                this.items.set(event.id, new NXMEvent(this.conversation, event));
+                break;
+            }
+        })
+        // update the events Map on the conversation
+        this.conversation.events = new Map([...this.conversation.events, ...this.items]);
+    }
+
+    /**
+     * Fetch the previous page if exists
+     * @returns {Promise&lt;Page>}
+     */
+    getPrev() {
+        if (!this.hasPrev()) return this._getError()
+        return this.conversation.getEvents(this._getConfig(this.cursor.prev))
+    }
+
+    /**
+     * Fetch the next page if exists
+     * @returns {Promise&lt;Page>}
+     */
+    getNext() {
+        if (!this.hasNext()) return this._getError()
+        return this.conversation.getEvents(this._getConfig(this.cursor.next))
+    }
 }
-module.exports = Recording;
+
+  module.exports = EventsPage;
 </code></pre>
         </article>
     </section>
