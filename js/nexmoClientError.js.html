@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: events/text_event.js</title>
+    <title>JSDoc: Source: nexmoClientError.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: events/text_event.js</h1>
+    <h1 class="page-title">Source: nexmoClientError.js</h1>
 
     
 
@@ -28,60 +28,80 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*
  * Nexmo Client SDK
- *  Text NXMEvent Object Model
+ *  Conversation Client - API Error wrapper
  *
  * Copyright (c) Nexmo Inc.
  */
 
-const NXMEvent = require('./nxmEvent');
+const NexmoClientErrorTypes = require('./nexmoClientErrorTypes');
+
+function decorateError(instance, error) {
+  if (error &amp;&amp; error.code) {
+    error.type = error.code;
+    delete error['code'];
+  }
+  Object.assign(instance, error);
+  instance.message = 'type: ' + instance.type + ', description: ' + (instance.description ? instance.description : '');
+  instance.stack = new Error().stack;
+}
 
 /**
- * A text event
- *
- * @class TextEvent
- * @extends NXMEvent
+ * Error constructor of an NexmoClient-error
+ * @param {string} errorInput String client error
  */
-class TextEvent extends NXMEvent {
-  constructor(conversation, params) {
-    super(conversation, params);
-    this.type = 'text';
-    this.conversation = conversation;
-    this.state = {
-      seen_by: {},
-      delivered_to: {}
-    };
-    if (params &amp;&amp; params.body &amp;&amp; params.body.timestamp) {
-      this.timestamp = params.body.timestamp;
-    }
-    Object.assign(this, params);
+const NexmoClientError = function(errorInput) {
+  const error = NexmoClientErrorTypes[errorInput];
+  // for other errors (libs/browser APIs) re-use the Client error
+  // to forward it but don't throw it away
+  if (error) {
+    // if error type exists in our list keep consistency
+    decorateError(this, error);
+  } else {
+    // if the structure is not as expected, f/w as much as we can get
+    this.message = (errorInput &amp;&amp; errorInput.message) ? errorInput.message : errorInput;
+    this.stack = (errorInput &amp;&amp; errorInput.stack) ? errorInput.stack : new Error().stack;
   }
 
-  /**
-   * Set the message status to 'seen'
-   * @returns {Promise}
-   */
-  seen() {
-    return super.seen();
+  // make sure the error.name matches the class name
+  this.name = 'NexmoClientError';
+  if (typeof global.NXMbugsnagClient !== 'undefined') {
+    global.NXMbugsnagClient.notify(this, {
+      severity: 'info'
+    });
   }
+};
 
-  /**
-   * Set the message status to 'delivered'.
-   * handled by the SDK
-   * @returns {Promise}
-   */
-  delivered() {
-    return super.delivered();
-  }
+NexmoClientError.prototype = Object.create(NexmoClientError.prototype);
+NexmoClientError.prototype.constructor = NexmoClientError;
 
-  /**
-   * Delete the event
-   * @returns {Promise}
-   */
-  del() {
-    return super.del();
+
+/**
+ * Error constructor of an API-error
+ * @param {object} error API error, always containing {type: &lt;string>}
+ */
+const NexmoApiError = function(error) {
+  decorateError(this, error);
+  // make sure the error.name matches the class name
+  this.name = 'NexmoApiError';
+  if (typeof global.NXMbugsnagClient !== 'undefined') {
+    global.NXMbugsnagClient.notify(this, {
+      severity: 'info',
+      metaData: {
+        'API trace': error.__metadata,
+        'rid': error.rid
+      }
+    });
   }
-}
-module.exports = TextEvent;
+};
+
+NexmoApiError.prototype = Object.create(NexmoApiError.prototype);
+NexmoApiError.prototype.constructor = NexmoApiError;
+
+
+module.exports = {
+  NexmoClientError: NexmoClientError,
+  NexmoApiError: NexmoApiError
+};
 </code></pre>
         </article>
     </section>
