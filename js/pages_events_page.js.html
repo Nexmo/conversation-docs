@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: modules/errors_emitter.js</title>
+    <title>JSDoc: Source: pages/events_page.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: modules/errors_emitter.js</h1>
+    <h1 class="page-title">Source: pages/events_page.js</h1>
 
     
 
@@ -28,78 +28,67 @@
         <article>
             <pre class="prettyprint source linenums"><code>/*
  * Nexmo Client SDK
- *  Errors Emitter
  *
  * Copyright (c) Nexmo Inc.
  */
 
-const logger = require('loglevel');
-const NexmoClientError = require('../nexmoClientError').NexmoClientError;
+const Page = require('./page')
+const NXMEvent = require('../events/nxmEvent');
+const TextEvent = require('../events/text_event');
+const ImageEvent = require('../events/image_event');
 
 /**
- * Class that can emit errors via any emitter passed to it.
- * @class ErrorsEmitter
- * @param {Emitter} emitter - Any event emitter that implements "emit" and "releaseGroup". Basically object that is mixed with Wildemitter.
- * @property {string} LISTENER_GROUP='NXM-errors' - the group this emitter will register
- * @emits Emitter#NXM-errors
- * @private
+ * A Events Page
+ *
+ * @class EventsPage
+ * @param {Map} items map of events fetched in the paginated query
+ * @extends Page
  */
-/**
- * Application listening for joins.
- *
- * @event Application#NXM-errors
- *
- * @property {NexmoClientError} error
- *
- * @example &lt;caption>listen for errors&lt;/caption>
- * application.on('*', 'NXM-errors', (error) => {
- *    console.log('Error thrown with type ' + error.type);
- *  });
- * @example &lt;caption>Update the token on expired-token error&lt;/caption>
- * application.on('system:error:expired-token', 'NXM-errors', (error) => {
- * 	console.log('token expired');
- * 	application.updateToken(&lt;token>);
- * });
- */
-class ErrorsEmitter {
-  constructor(emitter) {
-    this.log = logger.getLogger(this.constructor.name);
 
-    if (!emitter) {
-      throw new NexmoClientError('no emitter object passed for the Error Emitter');
+class EventsPage extends Page {
+    constructor(params) {
+        super(params);
+        this.items = new Map()
+        this.conversation = params.conversation
+        // Iterate and create the event objects
+        params.items.forEach((event) => {
+            switch (event.type) {
+                // NXMEvent types with corresponding classes
+                case 'text':
+                this.items.set(event.id, new TextEvent(this.conversation, event));
+                break;
+                case 'image':
+                this.items.set(event.id, new ImageEvent(this.conversation, event));
+                break;
+                default:
+                this.items.set(event.id, new NXMEvent(this.conversation, event));
+                break;
+            }
+        })
+        // update the events Map on the conversation
+        this.conversation.events = new Map([...this.conversation.events, ...this.items]);
     }
-    this.emitter = emitter;
-    this.LISTENER_GROUP = 'NXM-errors';
-  }
-  /**
-   * Detect if the param.type includes error and emit that payload in the LISTENER_GROUP
-   * @param param - the payload to forward in the LISTENER_GROUP
-   * @param param.type - the type of the event to check if it's an error
-   */
-  emitResponseIfError(param) {
-    if (this._isTypeError(param.type)) {
-      return this.emitter.emit(param.type, this.LISTENER_GROUP, param);
+
+    /**
+     * Fetch the previous page if exists
+     * @returns {Promise&lt;Page>}
+     */
+    getPrev() {
+        if (!this.hasPrev()) return this._getError()
+        return this.conversation.getEvents(this._getConfig(this.cursor.prev))
     }
-    return;
-  }
 
-  /**
-   * Release Group on the registered emitter (using the namespace LISTENER_GROUP that is set)
-   */
-  cleanup() {
-    return this.emitter.releaseGroup(this.LISTENER_GROUP);
-  }
-
-  /**
-   * Returns true if the param includes 'error'
-   * @param {string} type - the error type to check
-   */
-  _isTypeError(param) {
-    return param.indexOf('error') !== -1;
-  }
+    /**
+     * Fetch the next page if exists
+     * @returns {Promise&lt;Page>}
+     */
+    getNext() {
+        if (!this.hasNext()) return this._getError()
+        return this.conversation.getEvents(this._getConfig(this.cursor.next))
+    }
 }
 
-module.exports = ErrorsEmitter;
+  module.exports = EventsPage;
 </code></pre>
         </article>
     </section>

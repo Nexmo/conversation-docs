@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: modules/errors_emitter.js</title>
+    <title>JSDoc: Class: NXMEvent</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,92 +17,139 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: modules/errors_emitter.js</h1>
+    <h1 class="page-title">Class: NXMEvent</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
- * Nexmo Client SDK
- *  Errors Emitter
- *
- * Copyright (c) Nexmo Inc.
- */
+        <h2><span class="attribs"><span class="type-signature"></span></span>NXMEvent<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-const logger = require('loglevel');
-const NexmoClientError = require('../nexmoClientError').NexmoClientError;
+<article>
+    <div class="container-overview">
+    
+        
 
-/**
- * Class that can emit errors via any emitter passed to it.
- * @class ErrorsEmitter
- * @param {Emitter} emitter - Any event emitter that implements "emit" and "releaseGroup". Basically object that is mixed with Wildemitter.
- * @property {string} LISTENER_GROUP='NXM-errors' - the group this emitter will register
- * @emits Emitter#NXM-errors
- * @private
- */
-/**
- * Application listening for joins.
- *
- * @event Application#NXM-errors
- *
- * @property {NexmoClientError} error
- *
- * @example &lt;caption>listen for errors&lt;/caption>
- * application.on('*', 'NXM-errors', (error) => {
- *    console.log('Error thrown with type ' + error.type);
- *  });
- * @example &lt;caption>Update the token on expired-token error&lt;/caption>
- * application.on('system:error:expired-token', 'NXM-errors', (error) => {
- * 	console.log('token expired');
- * 	application.updateToken(&lt;token>);
- * });
- */
-class ErrorsEmitter {
-  constructor(emitter) {
-    this.log = logger.getLogger(this.constructor.name);
+    
 
-    if (!emitter) {
-      throw new NexmoClientError('no emitter object passed for the Error Emitter');
-    }
-    this.emitter = emitter;
-    this.LISTENER_GROUP = 'NXM-errors';
-  }
-  /**
-   * Detect if the param.type includes error and emit that payload in the LISTENER_GROUP
-   * @param param - the payload to forward in the LISTENER_GROUP
-   * @param param.type - the type of the event to check if it's an error
-   */
-  emitResponseIfError(param) {
-    if (this._isTypeError(param.type)) {
-      return this.emitter.emit(param.type, this.LISTENER_GROUP, param);
-    }
-    return;
-  }
+    
+    <h4 class="name" id="NXMEvent"><span class="type-signature"></span>new NXMEvent<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-  /**
-   * Release Group on the registered emitter (using the namespace LISTENER_GROUP that is set)
-   */
-  cleanup() {
-    return this.emitter.releaseGroup(this.LISTENER_GROUP);
-  }
+    
 
-  /**
-   * Returns true if the param includes 'error'
-   * @param {string} type - the error type to check
-   */
-  _isTypeError(param) {
-    return param.indexOf('error') !== -1;
-  }
-}
 
-module.exports = ErrorsEmitter;
-</code></pre>
-        </article>
-    </section>
+
+<div class="description">
+    Conversation NXMEvent Object.
+The super class that holds the base events that apply to
+common event objects.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="events_nxmEvent.js.html">events/nxmEvent.js</a>, <a href="events_nxmEvent.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
