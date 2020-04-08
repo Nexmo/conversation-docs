@@ -187,10 +187,10 @@
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight objective_c"><code><span class="k">@protocol</span> <span class="nc">NXMClientDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">client</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMClient.html">NXMClient</a></span> <span class="o">*</span><span class="p">)</span><span class="n">client</span> <span class="n">didChangeConnectionStatus</span><span class="o">:</span><span class="p">(</span><span class="n">NXMConnectionStatus</span><span class="p">)</span><span class="n">status</span> <span class="n">reason</span><span class="o">:</span><span class="p">(</span><span class="n">NXMConnectionStatusReason</span><span class="p">)</span><span class="n">reason</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">client</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMClient.html">NXMClient</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">client</span> <span class="nf">didChangeConnectionStatus</span><span class="p">:(</span><span class="n">NXMConnectionStatus</span><span class="p">)</span><span class="nv">status</span> <span class="nf">reason</span><span class="p">:(</span><span class="n">NXMConnectionStatusReason</span><span class="p">)</span><span class="nv">reason</span><span class="p">;</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">client</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMClient.html">NXMClient</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">client</span> <span class="nf">didReceiveError</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
 <span class="k">@optional</span>
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">client</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMClient.html">NXMClient</a></span> <span class="o">*</span><span class="p">)</span><span class="n">client</span> <span class="n">didReceiveCall</span><span class="o">:</span><span class="p">(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMCall.html">NXMCall</a></span> <span class="o">*</span><span class="p">)</span><span class="n">call</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">client</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMClient.html">NXMClient</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">client</span> <span class="nf">didReceiveCall</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMCall.html">NXMCall</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">call</span><span class="p">;</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">client</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMClient.html">NXMClient</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">client</span> <span class="nf">didReceiveConversation</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n"><a href="../Classes/NXMConversation.html">NXMConversation</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">conversation</span><span class="p">;</span>
 
 <span class="k">@end</span></code></pre>
@@ -208,7 +208,7 @@
                     <code>
                     <a name="/c:objc(pl)NXMClientDelegate(im)client:didChangeConnectionStatus:reason:"></a>
                     <a name="//apple_ref/objc/Method/-client:didChangeConnectionStatus:reason:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didChangeConnectionStatus:reason:">-client:didChangeConnectionStatus:reason:</a>
+                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didChangeConnectionStatus:reason:">-client:<wbr>didChangeConnectionStatus:<wbr>reason:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -235,7 +235,7 @@
                     <code>
                     <a name="/c:objc(pl)NXMClientDelegate(im)client:didReceiveError:"></a>
                     <a name="//apple_ref/objc/Method/-client:didReceiveError:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didReceiveError:">-client:didReceiveError:</a>
+                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didReceiveError:">-client:<wbr>didReceiveError:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -262,7 +262,7 @@
                     <code>
                     <a name="/c:objc(pl)NXMClientDelegate(im)client:didReceiveCall:"></a>
                     <a name="//apple_ref/objc/Method/-client:didReceiveCall:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didReceiveCall:">-client:didReceiveCall:</a>
+                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didReceiveCall:">-client:<wbr>didReceiveCall:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -289,7 +289,7 @@
                     <code>
                     <a name="/c:objc(pl)NXMClientDelegate(im)client:didReceiveConversation:"></a>
                     <a name="//apple_ref/objc/Method/-client:didReceiveConversation:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didReceiveConversation:">-client:didReceiveConversation:</a>
+                    <a class="token" href="#/c:objc(pl)NXMClientDelegate(im)client:didReceiveConversation:">-client:<wbr>didReceiveConversation:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -316,8 +316,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://developer.nexmo.com" target="_blank" rel="external">Nexmo</a>. All rights reserved. (Last updated: 2020-04-01)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://developer.nexmo.com" target="_blank" rel="external">Vonage</a>. All rights reserved. (Last updated: 2020-04-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
