@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>DocStrap Class: ConversationsPage</title>
+	<title>DocStrap Source: modules/rtcstats_analytics.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,694 +67,192 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: ConversationsPage</h1>
+		<h1 class="page-title">Source: modules/rtcstats_analytics.js</h1>
+    
 <section>
-
-<header>
-    
-        <h2>
-        ConversationsPage
-        </h2>
-        
-    
-</header>
-
-
-<article>
-    <div class="container-overview">
-    
-        
-<hr>
-<dt>
-    <h4 class="name" id="ConversationsPage"><span class="type-signature"></span>new ConversationsPage(items)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>A Conversations Page</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>items</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Map</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>map of conversations fetched in the paginated query</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="pages_conversations_page.js.html">pages/conversations_page.js</a>,
-				 <a href="pages_conversations_page.js.html#sunlight-1-line-12">line 12</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-    
-    </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="Page.html">Page</a></li>
-    </ul>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="getNext"><span class="type-signature"></span>getNext()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Fetch the next page if exists</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="pages_conversations_page.js.html">pages/conversations_page.js</a>,
-				 <a href="pages_conversations_page.js.html#sunlight-1-line-54">line 54</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;<a href="Page.html">Page</a>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-        <h5>Example</h5>
-        
-        <p class="code-caption">Fetch the next page if exists</p>
-    
-    <pre class="sunlight-highlight-javascript">currentConvPage.getNext().then((nextConvPage) =&gt; {
-   console.log(&quot;next conversation page &quot;, nextConvPage);
- }).catch((error) =&gt; {
-   console.error(&quot;error getting next conversation page &quot;, error);
- });</pre>
-
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="getPrev"><span class="type-signature"></span>getPrev()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Fetch the previous page if exists</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="pages_conversations_page.js.html">pages/conversations_page.js</a>,
-				 <a href="pages_conversations_page.js.html#sunlight-1-line-39">line 39</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;<a href="Page.html">Page</a>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-        <h5>Example</h5>
-        
-        <p class="code-caption">Fetch the previous page if exists</p>
-    
-    <pre class="sunlight-highlight-javascript">currentConvPage.getPrev().then((prevConvPage) =&gt; {
-   console.log(&quot;previous conversation page &quot;, prevConvPage);
- }).catch((error) =&gt; {
-   console.error(&quot;error getting previous conversation page &quot;, error);
- });</pre>
-
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="hasNext"><span class="type-signature"></span>hasNext()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Check if next page exists</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
-	<dd class="inherited-from">
-		<ul class="dummy">
-			<li>
-				<a href="Page.html#hasNext">Page#hasNext</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="pages_page.js.html">pages/page.js</a>,
-				 <a href="pages_page.js.html#sunlight-1-line-47">line 47</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-        <h5>Example</h5>
-        
-        <p class="code-caption">Check if next page exists</p>
-    
-    <pre class="sunlight-highlight-javascript">// currentPage is the current Conversations or Events Page
-currentPage.hasNext() // true or false</pre>
-
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="hasPrev"><span class="type-signature"></span>hasPrev()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Check if previous page exists</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
-	<dd class="inherited-from">
-		<ul class="dummy">
-			<li>
-				<a href="Page.html#hasPrev">Page#hasPrev</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="pages_page.js.html">pages/page.js</a>,
-				 <a href="pages_page.js.html#sunlight-1-line-37">line 37</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-        <h5>Example</h5>
-        
-        <p class="code-caption">Check if previous page exists</p>
-    
-    <pre class="sunlight-highlight-javascript">// currentPage is the current Conversations or Events Page
-currentPage.hasPrev() // true or false</pre>
-
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-</article>
-
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const rtcStatsAdapterParser = require("rtc-stats-adapter");
+const calculateMos = require('rtc-stats-adapter/calculate-mos');
+const utils_1 = __importDefault(require("../utils"));
+/**
+ * Collect WebRTC Report data
+ * Removes credential information from the STUN.TURN server configuration.
+ * performs Delta compression
+ *
+ * if isCallback is true the report includes a MOS score : trace('mos', mos, report);
+ *
+ * @param {object} context
+ * @param {Application} context.application
+ * @param {Conversation} context.conversation
+ * @param {RTCPeerConnection} context.pc peer connection object
+ * @param {string} context.rtc_id id of a leg
+ * @param {RTCStatsConfig} context.config config settings for ananlytics
+ * @property {MosReport} mos_report the final mos report to be sent when the stream is closed
+ * @property {number} _reportsCount the number of reports taken for mos average
+ * @property {number} _mosSum the summary of mos scores
+ * @private
+ */
+class RTCStatsAnalytics {
+    constructor(context) {
+        this.mos_report = { min: 5, max: 0 };
+        this._reportsCount = 0;
+        this._mosSum = 0;
+        this.intervals = [];
+        if (!context || !context.application || !context.rtc_id || !context.pc) {
+            return;
+        }
+        this.attachHandlers(context);
+        this.startSendingStats(context);
+        this.startEmittingStats(context);
+    }
+    attachHandlers(context) {
+        const { pc } = context;
+        const onConnectionStateChange = pc.onconnectionstatechange
+            ? pc.onconnectionstatechange
+            : () => { };
+        pc.onconnectionstatechange = (event) => {
+            onConnectionStateChange.call(pc, event);
+            switch (pc.connectionState) {
+                case "disconnected":
+                case "failed":
+                case "closed":
+                    this.removeIntervals();
+                    this.emitLastReport(context);
+            }
+        };
+    }
+    emitLastReport(context) {
+        const { application, conversation = null, rtc_id, config: { emit_events, emit_rtc_analytics }, } = context;
+        const mos_report = this.getMOSReport();
+        const mos = mos_report.last;
+        if (mos) {
+            if (emit_rtc_analytics) {
+                application.emit("rtcstats:analytics", {
+                    type: "mos_report",
+                    mos,
+                    rtc_id,
+                    mos_report
+                });
+            }
+            if (emit_events) {
+                console.warn('"rtcstats:report" event is deprecated. Use "rtcstats:analytics" instead');
+                /**
+                 * @deprecated Use "rtcstats:analytics instead"
+                 */
+                application.emit("rtcstats:report", mos, null, conversation, mos_report);
+            }
+        }
+    }
+    startSendingStats(context) {
+        const { pc, rtc_id, config: { remote_collection, remote_collection_url, remote_collection_interval, }, } = context;
+        if (!remote_collection)
+            return;
+        const remote_collection_interval_id = window.setInterval(() => {
+            pc.getStats(null).then((stats) => {
+                const data = rtcStatsAdapterParser(stats);
+                data.legId = rtc_id;
+                utils_1.default.networkRequest({
+                    url: remote_collection_url,
+                    type: "POST",
+                    data,
+                });
+            });
+            if (pc.connectionState === "closed" || pc.signalingState === 'closed') {
+                this.removeIntervals();
+            }
+        }, remote_collection_interval);
+        this.intervals.push(remote_collection_interval_id);
+    }
+    startEmittingStats(context) {
+        const { application, conversation = null, pc, rtc_id, config: { emit_events, emit_rtc_analytics, emit_interval }, } = context;
+        if (!emit_events &amp;&amp; !emit_rtc_analytics)
+            return;
+        const emit_stats_interval_id = window.setInterval(() => {
+            pc.getStats(null).then((stats) => {
+                const mos = this.getMos(stats);
+                if (!mos)
+                    return;
+                if (emit_rtc_analytics) {
+                    application.emit("rtcstats:analytics", {
+                        type: "mos",
+                        mos,
+                        report: stats,
+                        rtc_id,
+                    });
+                }
+                if (emit_events) {
+                    console.warn('"rtcstats:report" event is deprecated. Use "rtcstats:analytics" instead');
+                    /**
+                     * @deprecated Use "rtcstats:analytics instead"
+                     */
+                    application.emit("rtcstats:report", mos, stats, conversation);
+                }
+            });
+            if (pc.connectionState === "closed" || pc.signalingState === 'closed') {
+                this.removeIntervals();
+                this.emitLastReport(context);
+            }
+        }, emit_interval);
+        this.intervals.push(emit_stats_interval_id);
+    }
+    removeIntervals() {
+        this.intervals.forEach((interval) => window.clearInterval(interval));
+        this.intervals = [];
+    }
+    getMos(stats) {
+        const mos = calculateMos(stats);
+        this.updateMOSReport(parseInt(mos));
+        return mos;
+    }
+    /**
+     * Update the mos_report object
+     * @param {number} mos the MOS score
+     * @returns {object} the report object
+     */
+    updateMOSReport(mos) {
+        this._reportsCount++;
+        this._mosSum += mos;
+        this.mos_report.last = mos;
+        this.mos_report.min = mos &lt; this.mos_report.min ? mos : this.mos_report.min;
+        this.mos_report.max = mos > this.mos_report.max ? mos : this.mos_report.max;
+        this.mos_report.average = this._mosSum / this._reportsCount;
+    }
+    /**
+     * Update the MOS report object
+     * mos_report.min - the minimum MOS value during the stream
+     * mos_report.max - the maximum MOS value during the stream
+     * mos_report.last - the last MOS value during the stream
+     * mos_report.average - the average MOS value during the stream
+     * @returns {MosReport} mos_report - a report for the MOS values
+     *
+     */
+    getMOSReport() {
+        this.mos_report.min = RTCStatsAnalytics.normaliseFloat(this.mos_report.min);
+        this.mos_report.max = RTCStatsAnalytics.normaliseFloat(this.mos_report.max);
+        this.mos_report.last = RTCStatsAnalytics.normaliseFloat(this.mos_report.last);
+        this.mos_report.average = RTCStatsAnalytics.normaliseFloat(this.mos_report.average);
+        return this.mos_report;
+    }
+    static normaliseFloat(value) {
+        return parseFloat(value).toFixed(6);
+    }
+}
+exports.default = RTCStatsAnalytics;
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -764,10 +262,6 @@ currentPage.hasPrev() // true or false</pre>
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
