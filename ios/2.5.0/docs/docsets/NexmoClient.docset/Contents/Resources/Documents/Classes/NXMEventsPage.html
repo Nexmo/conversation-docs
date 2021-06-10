@@ -17,7 +17,7 @@
     <a title="NXMEventsPage Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (27% documented)</p>
+        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (100% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -219,24 +219,7 @@
               <div class="declaration">
                 <div class="language">
                   <p class="aside-title">Objective-C</p>
-                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMEventsPage</span> <span class="p">:</span> <span class="nc"><a href="../Classes/NXMPage.html">NXMPage</a></span>
-
-<span class="cm">/**
- *  Events contained in the page. The array size could be smaller than the page size.
- */</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NXMEvent</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">events</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Retrieves the next page. If the current page is the last, completionHandler will be called with an error.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">nextPage</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">,</span> <span class="n">NXMEventsPage</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">page</span><span class="p">))</span><span class="nv">completionHandler</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Retrieves the previous page. If the current page is the first, completionHandler will be called with an error.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">previousPage</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">,</span> <span class="n">NXMEventsPage</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">page</span><span class="p">))</span><span class="nv">completionHandler</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMEventsPage</span> <span class="p">:</span> <span class="nc"><a href="../Classes/NXMPage.html">NXMPage</a></span></code></pre>
 
                 </div>
                 <div class="language">
@@ -245,7 +228,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>The events on an <code><a href="../Classes/NXMConversation.html">NXMConversation</a></code> are paginated so the NXMEventsPage class provides a way to traverse a Conversation&rsquo;s events.</p>
 
           </section>
           <section class="section task-group-section">

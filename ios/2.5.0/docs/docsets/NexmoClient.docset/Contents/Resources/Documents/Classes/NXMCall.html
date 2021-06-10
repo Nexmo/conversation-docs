@@ -17,7 +17,7 @@
     <a title="NXMCall Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (27% documented)</p>
+        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (100% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -228,8 +228,7 @@
 
                 </div>
               </div>
-            <p>NXMCall
-The NXMCall object represent a call.</p>
+            <p>The NXMCall class is a <code><a href="../Classes/NXMConversation.html">NXMConversation</a></code> for phone calls.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     NXMCall can be and incoming call or outgoing call.
@@ -317,7 +316,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>set delegate for the call object.</p>
+                        <p>Set the delegate, <code><a href="../Protocols/NXMCallDelegate.html">NXMCallDelegate</a></code>, for the call object.</p>
 
                       </div>
                       <div class="declaration">
@@ -368,10 +367,10 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>answer incoming call.</p>
+                        <p>Answer an incoming call.</p>
 <div class="aside aside-warning">
     <p class="aside-title">Warning</p>
-    can answer the call only when the call member status is ringing.
+    You can only answer a call when the call member status is ringing.
 
 </div>
 
@@ -401,7 +400,7 @@ The NXMCall object represent a call.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A NXMErrorCallback block.</p>
+                                  <p>A <code><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMErrorCallback">NXMErrorCallback</a></code> block.</p>
                                 </div>
                               </td>
                             </tr>
@@ -424,10 +423,10 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>reject incoming call.</p>
+                        <p>Reject an incoming call.</p>
 <div class="aside aside-warning">
     <p class="aside-title">Warning</p>
-    can reject the call only when the call member status is ringing.
+    You can only answer a call when the call member status is ringing.
 
 </div>
 
@@ -457,7 +456,7 @@ The NXMCall object represent a call.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A NXMErrorCallback block.</p>
+                                  <p>A <code><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMErrorCallback">NXMErrorCallback</a></code> block.</p>
                                 </div>
                               </td>
                             </tr>
@@ -480,7 +479,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Add a member to a call using a username.</p>
 
                       </div>
                       <div class="declaration">
@@ -488,7 +487,8 @@ The NXMCall object represent a call.</p>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addCallMemberWithUsername</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">username</span>
-                <span class="nf">completionHandler</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMCompletionCallback">NXMCompletionCallback</a></span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">completionHandler</span><span class="p">;</span></code></pre>
+                <span class="nf">completionHandler</span><span class="p">:</span>
+                    <span class="p">(</span><span class="n"><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMCompletionCallback">NXMCompletionCallback</a></span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">completionHandler</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -496,6 +496,37 @@ The NXMCall object represent a call.</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addMember</span><span class="p">(</span><span class="n">withUsername</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kt"><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMCompletionCallback">NXMCompletionCallback</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The username of the member you want to add.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMErrorCallback">NXMErrorCallback</a></code> block.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -513,7 +544,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Add a member to a call using a number.</p>
 
                       </div>
                       <div class="declaration">
@@ -521,7 +552,8 @@ The NXMCall object represent a call.</p>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addCallMemberWithNumber</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">number</span>
-              <span class="nf">completionHandler</span><span class="p">:(</span><span class="n"><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMCompletionCallback">NXMCompletionCallback</a></span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">completionHandler</span><span class="p">;</span></code></pre>
+              <span class="nf">completionHandler</span><span class="p">:</span>
+                  <span class="p">(</span><span class="n"><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMCompletionCallback">NXMCompletionCallback</a></span> <span class="n">_Nullable</span><span class="p">)</span><span class="nv">completionHandler</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -529,6 +561,37 @@ The NXMCall object represent a call.</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addMember</span><span class="p">(</span><span class="n">withNumber</span> <span class="nv">number</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kt"><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMCompletionCallback">NXMCompletionCallback</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>number</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The number of the member you want to add.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Type%20Definitions.html#/c:NXMBlocks.h@T@NXMErrorCallback">NXMErrorCallback</a></code> block.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -546,7 +609,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sends DTMF digits to the call.</p>
 
                       </div>
                       <div class="declaration">
@@ -561,6 +624,25 @@ The NXMCall object represent a call.</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sendDTMF</span><span class="p">(</span><span class="n">_</span> <span class="nv">dtmf</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dtmf</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The DTMF digit(s) to send.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -578,7 +660,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Hangup an ongoing call.</p>
 
                       </div>
                       <div class="declaration">

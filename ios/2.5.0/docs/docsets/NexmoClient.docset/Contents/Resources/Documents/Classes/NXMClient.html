@@ -17,7 +17,7 @@
     <a title="NXMClient Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (27% documented)</p>
+        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (100% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -228,38 +228,29 @@
 
                 </div>
               </div>
-            <p>You use a <i>NXMClient</i> instance to utilise the services provided by NexmoConversation API in your app.
- <p>
- A session is the period during which your app is connected to NexmoConversation API.
- Sessions are established for the length of time given when the authToken was created.
- <p>
- Tokens also have a lifetime and can optionally be one-shot which will allow a single login only, before
- the authToken becomes invalid for another login attempt. If the authToken is revoked while a session is active the
- session may be terminated by the server.
- It is only possible to have a single session active over a socket.io connection at a time.
- Session multiplexing is not supported. {@link NXMClient#InitWithToken:NSString*}</p></p>
+            <p>You use a NXMClient instance to utilise the services provided by the Conversation API in your app.</p>
 
-<p><strong>Note</strong>: The connection uses socket.io for both web and mobile clients.
- Upon a successful socket.io connection the client needs to authenticate itself.
- This is achieved by sending a login request via {@link NXMClient#login} and get the answer in the delegate {@link NXMCLient#setDelegate}.</p></p>
+<p>A session is the period during which your app is connected to NexmoConversation API. Sessions are established for the length of time given when the authToken was created.</p>
 
-<p><p>Unless otherwise specified, all the methods invoked by this client are executed asynchronously.</p></p>
+<p>Tokens also have a lifetime and can optionally be one-shot which will allow a single login only, before
+the authToken becomes invalid for another login attempt. If the authToken is revoked while a session is active the session may be terminated by the server.
+It is only possible to have a single session active over a socket.io connection at a time.
+Session multiplexing is not supported.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>The connection uses socket.io for both web and mobile clients. Upon a successful socket.io connection the client needs to authenticate itself. This is achieved by sending a login request via <code><a href="../Classes/NXMClient.html#/c:objc(cs)NXMClient(im)loginWithAuthToken:">-[NXMClient loginWithAuthToken:]</a></code> and get the answer in the delegate <code><a href="../Classes/NXMClient.html#/c:objc(cs)NXMClient(im)setDelegate:">-[NXMClient setDelegate:]</a></code>.</p>
 
-<p><p>For the security of your Nexmo account, you should not embed directly your NexmoConversation credential authToken as strings in the app you submit to the Google Play Store.</p>
- <p>
- First step is to acquire a {@link NXMClient} instance based on user credentials.
- <p>To construct a {@link NXMClient} the required parameters are:</p>
- <ul>
- <li>Token:  The user specific authToken.</li>
- </ul>
- <p>
- Im oreder to get the answer you must call {@link NXMClient#setDelegate}
- Remember to logout when needed in order to remove current user and disconnect from the underlying connection.
- <p>Example usage:</p>
- <pre>
-     myClient.logout
- </pre>
- <p></p>
+</div><div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>Unless otherwise specified, all the methods invoked by this client are executed asynchronously.</p>
+
+</div>
+
+<p>For the security of your Nexmo account, you should not embed directly your credentials authToken as strings in the app you submit to the App Store.</p>
+
+<p>Remember to logout when needed in order to remove current user and disconnect from the underlying connection. Example usage:</p>
+<pre class="highlight objective_c"><code><span class="p">[</span><span class="n">myClient</span> <span class="nf">logout</span><span class="p">];</span>
+</code></pre>
 
           </section>
           <section class="section task-group-section">
@@ -557,6 +548,10 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>YES if connected.</p>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -573,7 +568,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>login with current authToken the response in NXMClientDelegate:didChangeConnectionStatus</p>
+                        <p>Login with current authToken the response in NXMClientDelegate:didChangeConnectionStatus</p>
 
                       </div>
                       <div class="declaration">
@@ -656,7 +651,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>logout the current user, the response in NXMClientDelegate:didChangeConnectionStatus</p>
+                        <p>Logout the current user, the response in NXMClientDelegate:didChangeConnectionStatus</p>
 
                       </div>
                       <div class="declaration">
@@ -701,8 +696,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get a conversation object by id
- getConversation With a specific Id</p>
+                        <p>Get a conversation object by id</p>
 
                       </div>
                       <div class="declaration">
@@ -733,7 +727,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>conversation id</p>
+                                  <p>Conversation id</p>
                                 </div>
                               </td>
                             </tr>
@@ -745,7 +739,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -800,7 +794,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>conversation name</p>
+                                  <p>Conversation name</p>
                                 </div>
                               </td>
                             </tr>
@@ -812,7 +806,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -873,7 +867,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page size</p>
+                                  <p>Page size</p>
                                 </div>
                               </td>
                             </tr>
@@ -885,7 +879,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page order</p>
+                                  <p>Page order</p>
                                 </div>
                               </td>
                             </tr>
@@ -897,7 +891,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -954,7 +948,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page size</p>
+                                  <p>Page size</p>
                                 </div>
                               </td>
                             </tr>
@@ -966,7 +960,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page order</p>
+                                  <p>Page order</p>
                                 </div>
                               </td>
                             </tr>
@@ -978,7 +972,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>@&ldquo;LEFT&rdquo;, @&ldquo;INVITED&rdquo; or @&ldquo;JOINED&rdquo;</p>
+                                  <p>&ldquo;LEFT&rdquo;, &ldquo;INVITED&rdquo; or &ldquo;JOINED&rdquo;</p>
                                 </div>
                               </td>
                             </tr>
@@ -990,7 +984,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1057,7 +1051,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>user ids/name or pstn number to call</p>
+                                  <p>The user ids/name or pstn numbers to call.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1069,19 +1063,19 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>type of the call (InApp/SERVER)</p>
+                                  <p>The type of the call (InApp/SERVER).</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>completionHandler</em>
+                                <em>completionHandlerA</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1151,7 +1145,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>the pushKit token</p>
+                                  <p>The PushKit token</p>
                                 </div>
                               </td>
                             </tr>
@@ -1163,7 +1157,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>user notifications token</p>
+                                  <p>The User Notifications token</p>
                                 </div>
                               </td>
                             </tr>
@@ -1175,7 +1169,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>is apple sandbox enviroment</p>
+                                  <p>Toggle Apple sandbox environment</p>
                                 </div>
                               </td>
                             </tr>
@@ -1187,7 +1181,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1239,7 +1233,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1290,7 +1284,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>pushInfo</p>
+                                  <p>The pushInfo</p>
                                 </div>
                               </td>
                             </tr>
@@ -1299,7 +1293,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>true if nexmo push</p>
+                        <p>YES if it is a nexmo push.</p>
                       </div>
                     </section>
                   </div>
@@ -1322,7 +1316,7 @@
 
                       </div>
                       <div class="abstract">
-                        <p>process Nexmo push, Call this method when isNexmoPushWithUserInfo:userInfo return true</p>
+                        <p>Process Nexmo push, Call this method when <code><a href="../Classes/NXMClient.html#/c:objc(cs)NXMClient(im)isNexmoPushWithUserInfo:">-[NXMClient isNexmoPushWithUserInfo:]</a></code> returns true</p>
 
                       </div>
                       <div class="declaration">
@@ -1352,7 +1346,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>pushInfo</p>
+                                  <p>The pushInfo</p>
                                 </div>
                               </td>
                             </tr>
@@ -1364,7 +1358,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1387,7 +1381,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>process Nexmo push event, Call this method when isNexmoPushWithUserInfo:userInfo return true</p>
+                        <p>Process Nexmo push, Call this method when <code><a href="../Classes/NXMClient.html#/c:objc(cs)NXMClient(im)isNexmoPushWithUserInfo:">-[NXMClient isNexmoPushWithUserInfo:]</a></code> returns true</p>
 
                       </div>
                       <div class="declaration">
@@ -1416,7 +1410,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>pushInfo</p>
+                                  <p>The pushInfo</p>
                                 </div>
                               </td>
                             </tr>

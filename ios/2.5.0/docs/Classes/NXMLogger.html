@@ -17,7 +17,7 @@
     <a title="NXMLogger Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (27% documented)</p>
+        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (100% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -219,15 +219,7 @@
               <div class="declaration">
                 <div class="language">
                   <p class="aside-title">Objective-C</p>
-                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMLogger</span> <span class="p">:</span> <span class="nc">NSObject</span>
-<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setLogLevel</span><span class="p">:(</span><span class="n"><a href="../Enums/NXMLoggerLevel.html">NXMLoggerLevel</a></span><span class="p">)</span><span class="nv">logLevel</span><span class="p">;</span>
-
-<span class="cm">/**
-  get the log files name, while using NXMLogger
- @return NSMutableArray&lt;NSString*&gt;&gt;*/</span>
-<span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSMutableArray</span> <span class="o">*</span><span class="p">)</span><span class="n">getLogFileNames</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMLogger</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                 </div>
                 <div class="language">
@@ -236,7 +228,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>A class used to configure the logging settings of the SDK.</p>
 
           </section>
           <section class="section task-group-section">
@@ -255,7 +247,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set the <code>NXMLogger</code> log level.</p>
 
                       </div>
                       <div class="declaration">
@@ -270,6 +262,25 @@
                           <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">setLogLevel</span><span class="p">(</span><span class="n">_</span> <span class="nv">logLevel</span><span class="p">:</span> <span class="kt"><a href="../Enums/NXMLoggerLevel.html">NXMLoggerLevel</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>logLevel</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The desire <code><a href="../Enums/NXMLoggerLevel.html">NXMLoggerLevel</a></code> case.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -287,7 +298,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>get the log files name, while using NXMLogger</p>
+                        <p>Get the log files name, while using NXMLogger.</p>
 
                       </div>
                       <div class="declaration">

@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">NexmoClient 2.5.0 Docs</a> (27% documented)</p>
+        <p><a href="index.html">NexmoClient 2.5.0 Docs</a> (100% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -235,8 +235,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>NXMCall
-The NXMCall object represent a call.</p>
+                        <p>The NXMCall class is a <code><a href="Classes/NXMConversation.html">NXMConversation</a></code> for phone calls.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     NXMCall can be and incoming call or outgoing call.
@@ -274,7 +273,12 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The NXMCallMember class is for members of a <code><a href="Classes/NXMCall.html">NXMCall</a></code>.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    NXMCallMember differs from the <code><a href="Classes/NXMMember.html">NXMMember</a></code> class.
+
+</div>
 
                         <a href="Classes/NXMCallMember.html" class="slightly-smaller">See more</a>
                       </div>
@@ -282,20 +286,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMCallMember</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">memberId</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n"><a href="Classes/NXMUser.html">NXMUser</a></span> <span class="o">*</span><span class="n">user</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="Classes/NXMChannel.html">NXMChannel</a></span> <span class="o">*</span><span class="n">channel</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isMuted</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n"><a href="Enums/NXMCallMemberStatus.html">NXMCallMemberStatus</a></span> <span class="n">status</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">statusDescription</span><span class="p">;</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">hold</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">isHold</span><span class="p">;</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">mute</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">isMute</span><span class="p">;</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">earmuff</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span> <span class="n">isEarmuff</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMCallMember</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -320,7 +311,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Directional data from Conversation Service (Conversation API).</p>
 
                         <a href="Classes/NXMDirection.html" class="slightly-smaller">See more</a>
                       </div>
@@ -328,11 +319,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMDirection</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n"><a href="Enums/NXMDirectionType.html">NXMDirectionType</a></span> <span class="n">type</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMDirection</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -357,7 +344,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The NXMChannel is how the user connects to the <code><a href="Classes/NXMConversation.html">NXMConversation</a></code>.</p>
 
                         <a href="Classes/NXMChannel.html" class="slightly-smaller">See more</a>
                       </div>
@@ -365,13 +352,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMChannel</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n"><a href="Classes/NXMDirection.html">NXMDirection</a></span> <span class="o">*</span><span class="n">from</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="Classes/NXMDirection.html">NXMDirection</a></span> <span class="o">*</span><span class="n">to</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="Classes/NXMLeg.html">NXMLeg</a></span> <span class="o">*</span><span class="n">leg</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMChannel</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -396,38 +377,29 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>You use a <i>NXMClient</i> instance to utilise the services provided by NexmoConversation API in your app.
- <p>
- A session is the period during which your app is connected to NexmoConversation API.
- Sessions are established for the length of time given when the authToken was created.
- <p>
- Tokens also have a lifetime and can optionally be one-shot which will allow a single login only, before
- the authToken becomes invalid for another login attempt. If the authToken is revoked while a session is active the
- session may be terminated by the server.
- It is only possible to have a single session active over a socket.io connection at a time.
- Session multiplexing is not supported. {@link NXMClient#InitWithToken:NSString*}</p></p>
+                        <p>You use a NXMClient instance to utilise the services provided by the Conversation API in your app.</p>
 
-<p><strong>Note</strong>: The connection uses socket.io for both web and mobile clients.
- Upon a successful socket.io connection the client needs to authenticate itself.
- This is achieved by sending a login request via {@link NXMClient#login} and get the answer in the delegate {@link NXMCLient#setDelegate}.</p></p>
+<p>A session is the period during which your app is connected to NexmoConversation API. Sessions are established for the length of time given when the authToken was created.</p>
 
-<p><p>Unless otherwise specified, all the methods invoked by this client are executed asynchronously.</p></p>
+<p>Tokens also have a lifetime and can optionally be one-shot which will allow a single login only, before
+the authToken becomes invalid for another login attempt. If the authToken is revoked while a session is active the session may be terminated by the server.
+It is only possible to have a single session active over a socket.io connection at a time.
+Session multiplexing is not supported.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>The connection uses socket.io for both web and mobile clients. Upon a successful socket.io connection the client needs to authenticate itself. This is achieved by sending a login request via <code><a href="Classes/NXMClient.html#/c:objc(cs)NXMClient(im)loginWithAuthToken:">-[NXMClient loginWithAuthToken:]</a></code> and get the answer in the delegate <code><a href="Classes/NXMClient.html#/c:objc(cs)NXMClient(im)setDelegate:">-[NXMClient setDelegate:]</a></code>.</p>
 
-<p><p>For the security of your Nexmo account, you should not embed directly your NexmoConversation credential authToken as strings in the app you submit to the Google Play Store.</p>
- <p>
- First step is to acquire a {@link NXMClient} instance based on user credentials.
- <p>To construct a {@link NXMClient} the required parameters are:</p>
- <ul>
- <li>Token:  The user specific authToken.</li>
- </ul>
- <p>
- Im oreder to get the answer you must call {@link NXMClient#setDelegate}
- Remember to logout when needed in order to remove current user and disconnect from the underlying connection.
- <p>Example usage:</p>
- <pre>
-     myClient.logout
- </pre>
- <p></p>
+</div><div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>Unless otherwise specified, all the methods invoked by this client are executed asynchronously.</p>
+
+</div>
+
+<p>For the security of your Nexmo account, you should not embed directly your credentials authToken as strings in the app you submit to the App Store.</p>
+
+<p>Remember to logout when needed in order to remove current user and disconnect from the underlying connection. Example usage:</p>
+<pre class="highlight objective_c"><code><span class="p">[</span><span class="n">myClient</span> <span class="nf">logout</span><span class="p">];</span>
+</code></pre>
 
                         <a href="Classes/NXMClient.html" class="slightly-smaller">See more</a>
                       </div>
@@ -493,8 +465,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>NXMConversation
- The NXMConversation object represent a conversation.</p>
+                        <p>The NXMConversation object represent a conversation.</p>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
     NXMConversation can be used for messaging and media.
@@ -565,9 +536,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>@interface NXMInitiator</p>
-
-<p>The NXMInitiator object represent the member state initiator</p>
+                        <p>The NXMInitiator object represent the member state initiator</p>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
     In case that the initiator is not part of the conversation the memberUuid proprety has null value and the userId proprety has the user id value. In case that the initiator is part of the conversation the memberUuid has the initiator member id value. In case that the initiator is done by webhook the isSystem has the value true, the memberUuid and the user id has the value null.
@@ -605,9 +574,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>NXMLeg</p>
-
-<p>The NXMLeg object represent the member media state</p>
+                        <p>The NXMLeg object represent the member media state</p>
 
                         <a href="Classes/NXMLeg.html" class="slightly-smaller">See more</a>
                       </div>
@@ -640,7 +607,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A class used to configure the logging settings of the SDK.</p>
 
                         <a href="Classes/NXMLogger.html" class="slightly-smaller">See more</a>
                       </div>
@@ -648,15 +615,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMLogger</span> <span class="p">:</span> <span class="nc">NSObject</span>
-<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setLogLevel</span><span class="p">:(</span><span class="n"><a href="Enums/NXMLoggerLevel.html">NXMLoggerLevel</a></span><span class="p">)</span><span class="nv">logLevel</span><span class="p">;</span>
-
-<span class="cm">/**
-  get the log files name, while using NXMLogger
- @return NSMutableArray&lt;NSString*&gt;&gt;*/</span>
-<span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSMutableArray</span> <span class="o">*</span><span class="p">)</span><span class="n">getLogFileNames</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMLogger</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -681,7 +640,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The NXMMember class represents a Member of a Conversation (<code><a href="Classes/NXMConversation.html">NXMConversation</a></code>). In order for a User to communicate through a Conversation they must join the Conversation through a membership.</p>
 
                         <a href="Classes/NXMMember.html" class="slightly-smaller">See more</a>
                       </div>
@@ -689,17 +648,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMMember</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">conversationUuid</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">memberUuid</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n"><a href="Classes/NXMUser.html">NXMUser</a></span> <span class="o">*</span><span class="n">user</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n"><a href="Enums/NXMMemberState.html">NXMMemberState</a></span> <span class="n">state</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NXMMediaSettings</span> <span class="o">*</span><span class="n">media</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="Classes/NXMChannel.html">NXMChannel</a></span> <span class="o">*</span><span class="n">channel</span><span class="p">;</span>
-
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMMember</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -724,7 +673,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A class representing the payload from an incoming push notification.</p>
 
                         <a href="Classes/NXMPushPayload.html" class="slightly-smaller">See more</a>
                       </div>
@@ -732,13 +681,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMPushPayload</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">customData</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">eventData</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n"><a href="Enums/NXMPushTemplate.html">NXMPushTemplate</a></span> <span class="n">template</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMPushPayload</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -763,7 +706,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The Conversations in your application are paginated so the NXMConversationsPage class provides a way to traverse them.</p>
 
                         <a href="Classes/NXMConversationsPage.html" class="slightly-smaller">See more</a>
                       </div>
@@ -771,24 +714,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMConversationsPage</span> <span class="p">:</span> <span class="nc"><a href="Classes/NXMPage.html">NXMPage</a></span>
-
-<span class="cm">/**
- *  Conversations contained in the page. The array size could be smaller than the page size.
- */</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="Classes/NXMConversation.html">NXMConversation</a></span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">conversations</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Retrieves the next page. If the current page is the last, completionHandler will be called with an error.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">nextPage</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">,</span> <span class="n">NXMConversationsPage</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">page</span><span class="p">))</span><span class="nv">completionHandler</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Retrieves the previous page. If the current page is the first, completionHandler will be called with an error.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">previousPage</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">,</span> <span class="n">NXMConversationsPage</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">page</span><span class="p">))</span><span class="nv">completionHandler</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMConversationsPage</span> <span class="p">:</span> <span class="nc"><a href="Classes/NXMPage.html">NXMPage</a></span></code></pre>
 
                         </div>
                         <div class="language">
@@ -813,7 +739,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The events on an <code><a href="Classes/NXMConversation.html">NXMConversation</a></code> are paginated so the NXMEventsPage class provides a way to traverse a Conversation&rsquo;s events.</p>
 
                         <a href="Classes/NXMEventsPage.html" class="slightly-smaller">See more</a>
                       </div>
@@ -821,24 +747,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMEventsPage</span> <span class="p">:</span> <span class="nc"><a href="Classes/NXMPage.html">NXMPage</a></span>
-
-<span class="cm">/**
- *  Events contained in the page. The array size could be smaller than the page size.
- */</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NXMEvent</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">events</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Retrieves the next page. If the current page is the last, completionHandler will be called with an error.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">nextPage</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">,</span> <span class="n">NXMEventsPage</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">page</span><span class="p">))</span><span class="nv">completionHandler</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Retrieves the previous page. If the current page is the first, completionHandler will be called with an error.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">previousPage</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">,</span> <span class="n">NXMEventsPage</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">page</span><span class="p">))</span><span class="nv">completionHandler</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMEventsPage</span> <span class="p">:</span> <span class="nc"><a href="Classes/NXMPage.html">NXMPage</a></span></code></pre>
 
                         </div>
                         <div class="language">
@@ -863,7 +772,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A base class for paginating objects, used in <code><a href="Classes/NXMEventsPage.html">NXMEventsPage</a></code> and <code><a href="Classes/NXMConversationsPage.html">NXMConversationsPage</a></code>.</p>
 
                         <a href="Classes/NXMPage.html" class="slightly-smaller">See more</a>
                       </div>
@@ -871,29 +780,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMPage</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="cm">/**
- *  Page size. Size could be greater than elements array's size.
- */</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSUInteger</span> <span class="n">size</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Elements date order in the page.
- */</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n"><a href="Enums/NXMPageOrder.html">NXMPageOrder</a></span> <span class="n">order</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Checks if there's a next page.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">hasNextPage</span><span class="p">;</span>
-
-<span class="cm">/**
- *  Checks if there's a previous page.
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">hasPreviousPage</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMPage</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -918,7 +805,7 @@ The NXMCall object represent a call.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The NXMUser class represents a User. A User identifies a unique Nexmo user in the context of a Nexmo Application.</p>
 
                         <a href="Classes/NXMUser.html" class="slightly-smaller">See more</a>
                       </div>
@@ -926,13 +813,7 @@ The NXMCall object represent a call.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMUser</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">uuid</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">displayName</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NXMUser</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">

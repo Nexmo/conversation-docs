@@ -17,7 +17,7 @@
     <a title="NXMConversation Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (27% documented)</p>
+        <p><a href="../index.html">NexmoClient 2.5.0 Docs</a> (100% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -228,8 +228,7 @@
 
                 </div>
               </div>
-            <p>NXMConversation
- The NXMConversation object represent a conversation.</p>
+            <p>The NXMConversation object represent a conversation.</p>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
     NXMConversation can be used for messaging and media.
@@ -349,14 +348,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>ID of the last event on the conversation.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSInteger</span> <span class="n">lastEventId</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSInteger</span> <span class="n">lastEventId</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -381,7 +380,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Conversation creation date</p>
+                        <p>Conversation creation date.</p>
 
                       </div>
                       <div class="declaration">
@@ -413,7 +412,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The current user member</p>
+                        <p>The current user member.</p>
 
                       </div>
                       <div class="declaration">
@@ -445,7 +444,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Conversation all members</p>
+                        <p>Conversation all members.</p>
 
                       </div>
                       <div class="declaration">
@@ -477,7 +476,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Conversation events delegate</p>
+                        <p>Conversation events delegate.</p>
 
                       </div>
                       <div class="declaration">
@@ -509,7 +508,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Conversation updates delegate</p>
+                        <p>Conversation updates delegate.</p>
 
                       </div>
                       <div class="declaration">
@@ -541,7 +540,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>invite the user as a member of the conversation</p>
+                        <p>Invite a user as a member of the conversation with a username.</p>
 
                       </div>
                       <div class="declaration">
@@ -566,12 +565,24 @@
                             <tr>
                               <td>
                                 <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The username of the user to invite.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>completion</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A block with param NSError if one occurred</p>
+                                  <p>A block with param NSError if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -594,7 +605,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Join the current user as a member of the conversation</p>
+                        <p>Join the current user as a member of the conversation.</p>
 
                       </div>
                       <div class="declaration">
@@ -623,7 +634,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A block with two params an NSError if one occurred and NXMMember</p>
+                                  <p>A block with two params an NSError if one occurred and NXMMember.</p>
                                 </div>
                               </td>
                             </tr>
@@ -646,7 +657,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Join a specific user as a member of the conversation</p>
+                        <p>Join a specific user as a member of the conversation.</p>
 
                       </div>
                       <div class="declaration">
@@ -677,7 +688,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>the user identifier</p>
+                                  <p>The username of the user to join the conversation.</p>
                                 </div>
                               </td>
                             </tr>
@@ -689,7 +700,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A block with two params NSError if one occurred and NXMMember</p>
+                                  <p>A block with two params NSError if one occurred and NXMMember.</p>
                                 </div>
                               </td>
                             </tr>
@@ -712,7 +723,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Current user&rsquo;s member leaves the conversation</p>
+                        <p>Leaves the conversation.</p>
 
                       </div>
                       <div class="declaration">
@@ -740,7 +751,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -763,7 +774,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Kicks a member from participating in the conversation</p>
+                        <p>Kicks a member from participating in the conversation.</p>
 
                       </div>
                       <div class="declaration">
@@ -793,7 +804,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The id of the member to kick</p>
+                                  <p>The id of the member to kick.</p>
                                 </div>
                               </td>
                             </tr>
@@ -805,7 +816,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -828,7 +839,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Enable media for the current user member</p>
+                        <p>Enable media for the current user member.</p>
 
                       </div>
                       <div class="declaration">
@@ -860,7 +871,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Disable media for the current user member</p>
+                        <p>Disable media for the current user member.</p>
 
                       </div>
                       <div class="declaration">
@@ -892,7 +903,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Send a custom event in the conversation</p>
+                        <p>Send a custom event in the conversation.</p>
 
                       </div>
                       <div class="declaration">
@@ -923,7 +934,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The customType name</p>
+                                  <p>The customType name.</p>
                                 </div>
                               </td>
                             </tr>
@@ -935,7 +946,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The custom event data</p>
+                                  <p>The custom event data.</p>
                                 </div>
                               </td>
                             </tr>
@@ -947,7 +958,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -970,7 +981,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sends a text message to the members of the conversation</p>
+                        <p>Sends a text message to the members of the conversation.</p>
 
                       </div>
                       <div class="declaration">
@@ -999,7 +1010,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The text to send</p>
+                                  <p>The text to send.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1011,7 +1022,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1034,7 +1045,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sends an attachment message to the members of the conversation</p>
+                        <p>Sends an attachment message to the members of the conversation.</p>
 
                       </div>
                       <div class="declaration">
@@ -1066,7 +1077,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The type of the attachment following NXMAttachmentType enum</p>
+                                  <p>The type of the attachment following NXMAttachmentType enum.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1078,7 +1089,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A name identifier of the attachment</p>
+                                  <p>A name identifier of the attachment.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1090,7 +1101,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The data of the attachment in a NSData representation</p>
+                                  <p>The data of the attachment in a NSData representation.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1102,7 +1113,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1125,7 +1136,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sends an indication that the current user&rsquo;s member has seen a message</p>
+                        <p>Sends an indication that the current user&rsquo;s member has seen a message.</p>
 
                       </div>
                       <div class="declaration">
@@ -1155,7 +1166,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The message identifier of the message that has been seen by the current user</p>
+                                  <p>The message identifier of the message that has been seen by the current user.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1167,7 +1178,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1190,7 +1201,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sends an indication that the current user&rsquo;s member started typing</p>
+                        <p>Sends an indication that the current user&rsquo;s member started typing.</p>
 
                       </div>
                       <div class="declaration">
@@ -1219,7 +1230,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1242,7 +1253,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sends an indication that the current user&rsquo;s member stopped typing</p>
+                        <p>Sends an indication that the current user&rsquo;s member stopped typing.</p>
 
                       </div>
                       <div class="declaration">
@@ -1270,7 +1281,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A completion block with an error object if one occurred</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1323,7 +1334,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1378,7 +1389,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page size</p>
+                                  <p>The page size.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1390,7 +1401,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page order</p>
+                                  <p>The page order as an <code><a href="../Enums/NXMPageOrder.html">NXMPageOrder</a></code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1402,7 +1413,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1458,7 +1469,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page size</p>
+                                  <p>The page size.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1470,7 +1481,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>page order</p>
+                                  <p>The page order as an <code><a href="../Enums/NXMPageOrder.html">NXMPageOrder</a></code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1482,7 +1493,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>event type filter</p>
+                                  <p>The event type filter.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1494,7 +1505,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>completion block</p>
+                                  <p>A completion block with an error object if one occurred.</p>
                                 </div>
                               </td>
                             </tr>
