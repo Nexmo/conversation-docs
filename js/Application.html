@@ -428,7 +428,7 @@ user's invitations</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-583">line 583</a>
+				 <a href="application.js.html#sunlight-1-line-585">line 585</a>
 			</li>
 		</ul>
 	</dd>
@@ -455,7 +455,7 @@ user's invitations</p>
             
 <hr>
 <dt>
-    <h4 class="name" id="callServer"><span class="type-signature">&lt;async> </span>callServer(user, <span class="optional">type</span>)</h4>
+    <h4 class="name" id="callServer"><span class="type-signature">&lt;async> </span>callServer(user, <span class="optional">type</span>, <span class="optional">custom_data</span>)</h4>
     
     
 </dt>
@@ -578,6 +578,44 @@ listen for it with application.on(&quot;call:status:changed&quot;)</p>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>custom_data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>custom data to be included in the call object, i.e. { yourCustomKey: yourCustomValue }</p></td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -619,7 +657,7 @@ listen for it with application.on(&quot;call:status:changed&quot;)</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-308">line 308</a>
+				 <a href="application.js.html#sunlight-1-line-310">line 310</a>
 			</li>
 		</ul>
 	</dd>
@@ -676,8 +714,9 @@ listen for it with application.on(&quot;call:status:changed&quot;)</p>
 		}
  });
 
- application.callServer(phone_number).then(() =&gt; {
+ application.callServer(phone_number).then((nxmCall) =&gt; {
    console.log(&#x27;Calling phone &#x27; + phone_number);
+   console.log(&#x27;Call Object &#x27;: nxmCall);
  }).catch((error) =&gt; {
    console.error(error);
  });</pre>
@@ -833,7 +872,7 @@ Result added (or updated) in this.conversations</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-420">line 420</a>
+				 <a href="application.js.html#sunlight-1-line-422">line 422</a>
 			</li>
 		</ul>
 	</dd>
@@ -1136,7 +1175,7 @@ logged-in user is a member with a state of <code>JOINED</code> or <code>INVITED<
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-496">line 496</a>
+				 <a href="application.js.html#sunlight-1-line-498">line 498</a>
 			</li>
 		</ul>
 	</dd>
@@ -1314,7 +1353,7 @@ logged-in user is a member with a state of <code>JOINED</code> or <code>INVITED<
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-563">line 563</a>
+				 <a href="application.js.html#sunlight-1-line-565">line 565</a>
 			</li>
 		</ul>
 	</dd>
@@ -1751,7 +1790,7 @@ The conversation name must be unique per application.</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-370">line 370</a>
+				 <a href="application.js.html#sunlight-1-line-372">line 372</a>
 			</li>
 		</ul>
 	</dd>
@@ -2019,7 +2058,7 @@ The conversation name must be unique per application.</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-400">line 400</a>
+				 <a href="application.js.html#sunlight-1-line-402">line 402</a>
 			</li>
 		</ul>
 	</dd>
@@ -2220,7 +2259,7 @@ You don't need to start the stream, the SDK will play the audio for you</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-334">line 334</a>
+				 <a href="application.js.html#sunlight-1-line-336">line 336</a>
 			</li>
 		</ul>
 	</dd>
@@ -2340,7 +2379,7 @@ You don't need to start the stream, the SDK will play the audio for you</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-525">line 525</a>
+				 <a href="application.js.html#sunlight-1-line-527">line 527</a>
 			</li>
 		</ul>
 	</dd>
@@ -3498,7 +3537,7 @@ You don't need to start the stream, the SDK will play the audio for you</p>
 		<ul class="dummy">
 			<li>
 				<a href="application.js.html">application.js</a>,
-				 <a href="application.js.html#sunlight-1-line-511">line 511</a>
+				 <a href="application.js.html#sunlight-1-line-513">line 513</a>
 			</li>
 		</ul>
 	</dd>
@@ -3570,7 +3609,7 @@ You don't need to start the stream, the SDK will play the audio for you</p>
 
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a>
-	on Thu Sep 2nd 2021 using the <a
+	on Fri Sep 3rd 2021 using the <a
 	href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
 </footer>
